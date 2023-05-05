@@ -77,5 +77,5 @@
 #### Ya al saber que symfony funciona bien y que tenemos todo instalado y actualizado vamos a conectarnos a la base de datos para ellos seguimos los siguientes pasos:
 - Primero cambiamos la ultima linea de el .env  que no esta conectada y ponemos ```DATABASE_URL="mysql://root:root@127.0.0.1:3306/baseDatosFutbol?serverVersion=5.7"``` con el nombre que queramos ponerle a la base de datos en este caso se va a llamar baseDatosFutbol
 - Despues en la terminal creamos la base de datos con el comando ```hp bin/consle doctrine:database:create```
-- Instalamos el maker-bundle de symfony para poder seguir con la base de datos con este comando: ```omposer require symfony/maker-bundle --dev```
+- Instalamos el maker-bundle de symfony para poder seguir con la base de datos con este comando: ```composer require symfony/maker-bundle --dev```
 - 
