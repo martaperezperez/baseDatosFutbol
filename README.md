@@ -120,14 +120,14 @@ ase de datos que gestiones clubes, jugadores y entrenadores
 ![tablaClub.png](src%2Fimagenes%2FtablaClub.png)
 
 - para darle las migraciones necesarias y funcione hacemos estos comandos ```symfony console make:migrations```  ```symfony console doctrine :migrations:migrate```
-#### Ahora vamos a crear las clases Controller de cada clase
+#### Ahora vamos a crear las clases Controller de cada clase que atiende a los mensajes que manda el usuario 
 - ```bin/console make:controller ClubContoller```
 - ```bin/console make:controller EntrenadorContoller```
 - ```bin/console make:controller PlayerContoller```
 
 ![Controllers.png](src%2Fimagenes%2FControllers.png)
 
-#### Ahora vamos a crear las clases From
+#### Ahora vamos a crear las clases From que nos servira para recoger los datos y crear formularios
 - ```hp bin/console make:form PlayerType```
 
 ![crearPlayerType.png](src%2Fimagenes%2FcrearPlayerType.png)
@@ -139,5 +139,10 @@ ase de datos que gestiones clubes, jugadores y entrenadores
 - ```hp bin/console make:form ClubType```
 
 ![carpetaForm.png](src%2Fimagenes%2FcarpetaForm.png)
+
+#### Echo esto, vamos a ver las clases que nos faltan y vamos a utilizar 
+#### Las clases del directorio Entity son Player,Entrenador y Club que guardan en ellas los campos que hay en cada clase que tipo de datos son y sus get y set
+
+![entity.png](src%2Fimagenes%2Fentity.png)
 
 
