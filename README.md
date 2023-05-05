@@ -1,14 +1,19 @@
 # Mini Aplicación Symfony API Rest 
-## Mini Aplicación con base de datos que gestiones clubes, jugadores y entrenadores
+## Mini Apli
+
+cación con b
+
+ase de datos que gestiones clubes, jugadores y entrenadores
 
 ### Primero creamos un proyecto en symfony 
 #### En la terminal ponemos el proximo comando,para entrar en el directorio que queremos crear el proyecto:
 - ```cd/var/www```
 #### Con el siguiente comando crwamos el proyecto en symfony que se va a llamar baseDatosFutbol:
-  - "sudo symfony ne baseDatosFutbol"
+  - ```sudo symfony ne baseDatosFutbol"```
 #### Despues le metemos los permisos necesarios:
 - ```sudo chmod 775 baseDatosFutbol/ -Rf```
-- ````sudo chown marta.www-data baseDatosFutbol/ -Rf```
+- ```sudo chown marta.www-data baseDatosFutbol/ -Rf```
+![carpetaProyecto.png](src%2Fimagenes%2FcarpetaProyecto.png)
 ### Tambien le damos permisos en ngixn siguiendo lossiguiente comandos:
 - ```cd /etc/nginx/sites-avaible```
 - ```vim baseDatosFutbol```
@@ -67,8 +72,16 @@
     }
 }
 ``` 
+![codigo.png](src%2Fimagenes%2Fcodigo.png)
 
+#### comprobamos que este funcionando
+![site-avaible.png](src%2Fimagenes%2Fsite-avaible.png)
+
+![site-enable.png](src%2Fimagenes%2Fsite-enable.png)
 - ```sudo nginx -t```  para saber que esta funcionando bien
+
+![nginxFUncionando.png](src%2Fimagenes%2FnginxFUncionando.png)
+
 - ```sudo service nginx reload```
 #### Ahora entramos en el proyecto por la terminal
 -```cd /cd/var/www/baseDatosFutbol```
@@ -95,6 +108,14 @@
  |        |                  | dorsal            |                   |
  |        | email(String)    | email(String)     | email(String)     |
  |        | phone(int)       | phone(int)        | phone(int)        |
+
+![baseDatos.png](src%2Fimagenes%2FbaseDatos.png)
+
+![tablaEntrenador.png](src%2Fimagenes%2FtablaEntrenador.png)
+
+![tablaJugador.png](src%2Fimagenes%2FtablaJugador.png)
+
+![tablaClub.png](src%2Fimagenes%2FtablaClub.png)
 
 - para darle las migraciones necesarias y funcione hacemos estos comandos ```symfony console make:migrations```  ```symfony console doctrine :migrations:migrate```
 #### Ahora vamos a crear los controladores de cada clase
