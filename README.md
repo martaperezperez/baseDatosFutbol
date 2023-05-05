@@ -1,4 +1,4 @@
-# Mini Aplicación Sumfony API Rest 
+# Mini Aplicación Symfony API Rest 
 ## Mini Aplicación con base de datos que gestiones clubes, jugadores y entrenadores
 
 ### Primero creamos un proyecto en symfony 
