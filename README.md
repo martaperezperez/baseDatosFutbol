@@ -141,7 +141,7 @@ ase de datos que gestiones clubes, jugadores y entrenadores
 ![carpetaForm.png](src%2Fimagenes%2FcarpetaForm.png)
 
 #### Echo esto, vamos a ver las clases que nos faltan y vamos a utilizar 
-#### Las clases del directorio Entity son Player,Entrenador y Club que guardan en ellas los campos que hay en cada clase que tipo de datos son y sus get y set
+#### Las clases del directorio Entity son Player,Entrenador y Club que guardan en ellas los campos que hay en cada clase que tipo de datos son y los get y set de cada campo
 
 ![entity.png](src%2Fimagenes%2Fentity.png)
 
