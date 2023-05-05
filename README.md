@@ -97,6 +97,10 @@
  |        | phone(int)       | phone(int)        | phone(int)        |
 
 - para darle las migraciones necesarias y funcione hacemos estos comandos ```symfony console make:migrations```  ```symfony console doctrine :migrations:migrate```
+#### Ahora vamos a crear los controladores de cada clase
+- ```bin/console make:controller ClubContoller```
+- ```bin/console make:controller EntrenadorContoller```
+- ```bin/console make:controller PlayerContoller```
 - 
 
 
