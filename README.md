@@ -78,4 +78,25 @@
 - Primero cambiamos la ultima linea de el .env  que no esta conectada y ponemos ```DATABASE_URL="mysql://root:root@127.0.0.1:3306/baseDatosFutbol?serverVersion=5.7"``` con el nombre que queramos ponerle a la base de datos en este caso se va a llamar baseDatosFutbol
 - Despues en la terminal creamos la base de datos con el comando ```hp bin/consle doctrine:database:create```
 - Instalamos el maker-bundle de symfony para poder seguir con la base de datos con este comando: ```composer require symfony/maker-bundle --dev```
+- Ahora vamos a crear en la base de datos las tablas con sus respectivos datos  ```php bin/console make:entity```
+- las tablas que vamos a utilizar con sus respectivos datos , ninguno de ellos puede ser null, son las siguientes:
+
+
+ | tablas:| Entrenador       | Player            | Club              |
+ |--------|------------------|-------------------|-------------------|
+ | Datos: |                  |                   |                   |
+ |        | dni(String)      | dni(String)       |                   |
+ |        | name(String)     | name(String)      | name(String)      |
+ |        | las_name(String) | last_name(String) | last_name(String) |
+ |        | team(String)     | team(String)      |                   |
+ |        | salary(int)      | salary(int)       |                   |
+ |        |                  |                   | Budget(int)       |
+ |        |                  | position(String)  |                   |
+ |        |                  | dorsal            |                   |
+ |        | email(String)    | email(String)     | email(String)     |
+ |        | phone(int)       | phone(int)        | phone(int)        |
+
+- para darle las migraciones necesarias y funcione hacemos estos comandos ```symfony console make:migrations```  ```symfony console doctrine :migrations:migrate```
 - 
+
+
