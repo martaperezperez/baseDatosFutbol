@@ -13,7 +13,9 @@ ase de datos que gestiones clubes, jugadores y entrenadores
 #### Despues le metemos los permisos necesarios:
 - ```sudo chmod 775 baseDatosFutbol/ -Rf```
 - ```sudo chown marta.www-data baseDatosFutbol/ -Rf```
+- 
 ![carpetaProyecto.png](src%2Fimagenes%2FcarpetaProyecto.png)
+
 ### Tambien le damos permisos en ngixn siguiendo lossiguiente comandos:
 - ```cd /etc/nginx/sites-avaible```
 - ```vim baseDatosFutbol```
@@ -122,6 +124,8 @@ ase de datos que gestiones clubes, jugadores y entrenadores
 - ```bin/console make:controller ClubContoller```
 - ```bin/console make:controller EntrenadorContoller```
 - ```bin/console make:controller PlayerContoller```
-- 
+
+![Controllers.png](src%2Fimagenes%2FControllers.png)
+
 
 
