@@ -154,6 +154,9 @@ ase de datos que gestiones clubes, jugadores y entrenadores
 
 ![postmanOrganizacion.png](src%2Fimagenes%2FpostmanOrganizacion.png)
 
+#### Para que nos lleve a la pagina inicial ponemos la url, en el campo de la URL, que pusimos en el codigo de arriba en nginx en este caso futbol.localhost y al lado de la url ponemos POTs y le damos a send para enviar y abajo en Preview vemos la pagina inicial.
+
+![postmanPaginaInicial.png](src%2Fimagenes%2FpostmanPaginaInicial.png)
 
 
 
