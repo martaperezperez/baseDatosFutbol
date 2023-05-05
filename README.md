@@ -146,3 +146,14 @@ ase de datos que gestiones clubes, jugadores y entrenadores
 ![entity.png](src%2Fimagenes%2Fentity.png)
 
 
+#### Para ver si los metodos de create, update,delete, show, index que pusimos en la clase Controller de cada tabbla funciona vamos a utilizar la aplicacion postman en la que pondremos la Url de busqueda de cada metodo para ver si funciona con nginx
+
+
+#### Vamos a crear una nueva coleccion llamada baseDatosFutbol y dentro de ella vamos a crear 3 carpetas que se van a llamar PLayer,Entrenador y Club como nuestras clases entity y un request que se va a llamar pagina inicia que nos va a llevar a la pagina inicial.
+#### Dentro de cada carpeta vamos a crear 5 request cada uno por un metodo(create, delete, update, show, index) que va tener cada carpeta referente a cada clase.
+
+![postmanOrganizacion.png](src%2Fimagenes%2FpostmanOrganizacion.png)
+
+
+
+
