@@ -13,7 +13,7 @@ ase de datos que gestiones clubes, jugadores y entrenadores
 #### Despues le metemos los permisos necesarios:
 - ```sudo chmod 775 baseDatosFutbol/ -Rf```
 - ```sudo chown marta.www-data baseDatosFutbol/ -Rf```
-- 
+
 ![carpetaProyecto.png](src%2Fimagenes%2FcarpetaProyecto.png)
 
 ### Tambien le damos permisos en ngixn siguiendo lossiguiente comandos:
@@ -120,12 +120,24 @@ ase de datos que gestiones clubes, jugadores y entrenadores
 ![tablaClub.png](src%2Fimagenes%2FtablaClub.png)
 
 - para darle las migraciones necesarias y funcione hacemos estos comandos ```symfony console make:migrations```  ```symfony console doctrine :migrations:migrate```
-#### Ahora vamos a crear los controladores de cada clase
+#### Ahora vamos a crear las clases Controller de cada clase
 - ```bin/console make:controller ClubContoller```
 - ```bin/console make:controller EntrenadorContoller```
 - ```bin/console make:controller PlayerContoller```
 
 ![Controllers.png](src%2Fimagenes%2FControllers.png)
 
+#### Ahora vamos a crear las clases From
+- ```hp bin/console make:form PlayerType```
+
+![crearPlayerType.png](src%2Fimagenes%2FcrearPlayerType.png)
+
+- ```hp bin/console make:form EntrenadorType```
+
+![crearEntrenadorType.png](src%2Fimagenes%2FcrearEntrenadorType.png)
+
+- ```hp bin/console make:form ClubType```
+
+![carpetaForm.png](src%2Fimagenes%2FcarpetaForm.png)
 
 
