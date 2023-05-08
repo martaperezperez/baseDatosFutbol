@@ -4,12 +4,17 @@ namespace App\Controller;
 
 
 use App\Entity\Club;
+use App\Form\ClubType;
+use App\Helper\FormErrorsToArray;
 use App\Repository\ClubRepository;
+use ContainerBtxjtRj\getDebug_ArgumentResolver_NotTaggedControllerService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ClubController extends AbstractController
 {
@@ -28,11 +33,14 @@ class ClubController extends AbstractController
     private $entityManager;
     private  $clubRepository;
 
+    private $validator;
 
-    public function __construct(EntityManagerInterface $entityManager, ClubRepository $clubRepository)
+
+    public function __construct(EntityManagerInterface $entityManager, ClubRepository $clubRepository, ValidatorInterface $validator)
     {
         $this->entityManager = $entityManager;
         $this->clubRepository = $clubRepository;
+        $this->validator=$validator;
     }
     #[Route('club', name: 'club_index', methods: "GET")]
     public function index():Response{
@@ -44,34 +52,24 @@ class ClubController extends AbstractController
 
 
     #[Route('club/create','club_create',methods: "POST")]
-    public function create(Request $request): Response{
-        $data = json_decode($request->getContent(), true);
+    public function create(Request $request, ClubRepository $clubRepository): Response{
 
+        $club = new Club();
+        $form= $this->createForm(ClubType::class, $club);
 
-        $club= new Club();
-        $club->setName($data['name'] ?? 'Default name');
-        $club->setBudget(rand(1000,2000));
-        $club ->setEmail($data['email']??'Default email');
-        $club->setPhone($data['telefono']??'Default telefono');
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $clubRepository->save($club, true);
 
+            return new JsonResponse(['message'=>'Club reate successfully'], Response::HTTP_CREATED);
+        }
 
-        $this->entityManager->persist($club);
-        $this->entityManager->flush();
-
-        return new Response(sprintf(
-            'name: %s presupuesto: %d email: %s telefono: %s',
-            $club->getName(),
-            $club->getBudget(),
-            $club->getEmail(),
-            $club->getPhone()
-        ));
-
-
+        return new JsonResponse(['errors'=>FormErrorsToArray::staticParseErrorsToArray($form)], Response::HTTP_BAD_REQUEST);
 
     }
 
 
-    #[Route('club/eliminar/{id}', name:'club_eliminado', methods:"DELETE")]
+    #[Route('club/delete/{id}', name:'club_delete', methods:"DELETE")]
     public function delete(Club $club):Response{
         $this->entityManager->remove($club);
         $this->entityManager->flush();
@@ -95,7 +93,7 @@ class ClubController extends AbstractController
         $this->entityManager->flush();
 
         return new Response(sprintf(
-            'nombre: %s presupuesto: %d email: %s telefono: %s',
+            'name: %s budget: %d email: %s phone: %s',
             $club->getName(),
             $club->getBudget(),
             $club->getEmail(),
@@ -107,7 +105,7 @@ class ClubController extends AbstractController
     #[Route('club/show/{id}', name: 'club_show', methods: "GET")]
     public function show(Club $club):Response{
         return new Response(sprintf(
-            'nombre: %s presupuesto. %d email: %s telefono: %s',
+            'name: %s budget: %d email: %s phone: %s',
             $club->getName(),
             $club->getBudget(),
             $club->getEmail(),

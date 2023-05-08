@@ -2,34 +2,49 @@
 
 namespace App\Form;
 
-use App\Entity\Club;
+use App\Entity\Coach;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class ClubType extends AbstractType
+class CoachType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', null, [
-                'constraints'=>[
+            ->add('dni', null, [
+                'constraints'=> [
                     new NotBlank(),
                 ],
             ])
-            ->add('budget', null, [
-                'constraints'=>[
+            ->add('name', null, [
+                'constraints'=> [
+                    new NotBlank(),
+                ],
+            ])
+            ->add('last_name', null, [
+                'constraints'=> [
+                    new NotBlank(),
+                ],
+            ])
+            ->add('team', null, [
+                'constraints'=> [
+                    new NotBlank(),
+                ],
+            ])
+            ->add('salary', null, [
+                'constraints'=> [
                     new NotBlank(),
                 ],
             ])
             ->add('email', null, [
-        'constraints'=>[
-            new NotBlank(),
-        ],
-    ])
+                'constraints'=> [
+                    new NotBlank(),
+                ],
+            ])
             ->add('phone', null, [
-                'constraints'=>[
+                'constraints'=> [
                     new NotBlank(),
                 ],
             ])
@@ -44,7 +59,7 @@ class ClubType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Club::class,
+            'data_class' => Coach::class,
         ]);
     }
 }

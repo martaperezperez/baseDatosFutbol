@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Entrenador;
+use App\Entity\Coach;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Entrenador>
+ * @extends ServiceEntityRepository<Coach>
  *
- * @method Entrenador|null find($id, $lockMode = null, $lockVersion = null)
- * @method Entrenador|null findOneBy(array $criteria, array $orderBy = null)
- * @method Entrenador[]    findAll()
- * @method Entrenador[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Coach|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Coach|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Coach[]    findAll()
+ * @method Coach[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class EntrenadorRepository extends ServiceEntityRepository
+class CoachRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Entrenador::class);
+        parent::__construct($registry, Coach::class);
     }
 
-    public function save(Entrenador $entity, bool $flush = false): void
+    public function save(Coach $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class EntrenadorRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Entrenador $entity, bool $flush = false): void
+    public function remove(Coach $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class EntrenadorRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Entrenador[] Returns an array of Entrenador objects
+//     * @return Coach[] Returns an array of Coach objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class EntrenadorRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Entrenador
+//    public function findOneBySomeField($value): ?Coach
 //    {
 //        return $this->createQueryBuilder('e')
 //            ->andWhere('e.exampleField = :val')

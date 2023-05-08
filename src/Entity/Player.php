@@ -38,7 +38,7 @@ class Player
     private ?string $email = null;
 
     #[ORM\Column]
-    private ?string $phone = null;
+    private ?int $phone = null;
 
     public function getId(): ?int
     {
@@ -69,12 +69,12 @@ class Player
         return $this;
     }
 
-    public function getLast_name(): ?string
+    public function getLastName(): ?string
     {
         return $this->last_name;
     }
 
-    public function setLast_name(string $last_name): self
+    public function setLastName(string $last_name): self
     {
         $this->last_name = $last_name;
 
@@ -141,12 +141,12 @@ class Player
         return $this;
     }
 
-    public function getPhone(): ?string
+    public function getPhone(): ?int
     {
         return $this->phone;
     }
 
-    public function setPhone(string $phone): self
+    public function setPhone(int $phone): self
     {
         $this->phone = $phone;
 

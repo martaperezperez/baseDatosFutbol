@@ -23,7 +23,7 @@ class Club
     private ?string $email = null;
 
     #[ORM\Column]
-    private ?string $phone = null;
+    private ?int $phone = null;
 
     public function getId(): ?int
     {
@@ -66,12 +66,12 @@ class Club
         return $this;
     }
 
-    public function getPhone(): ?string
+    public function getPhone(): ?int
     {
         return $this->phone;
     }
 
-    public function setPhone(string $phone): self
+    public function setPhone(int $phone): self
     {
         $this->phone = $phone;
 

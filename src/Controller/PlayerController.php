@@ -4,6 +4,8 @@ namespace App\Controller;
 
 
 use App\Entity\Player;
+use App\Form\PlayerType;
+use App\Helper\FormErrorsToArray;
 use App\Repository\PlayerRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,6 +13,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 
 
@@ -29,117 +32,106 @@ class PlayerController extends AbstractController
 
 
             private $entityManager;
-            private $jugadorRepository;
+            private $playerRepository;
+
+            private $validator;
 
 
-      public function __construct(EntityManagerInterface $entityManager, PlayerRepository $jugadorRepository)
+      public function __construct(EntityManagerInterface $entityManager, PlayerRepository $playerRepository, ValidatorInterface $validator)
           {
                       $this->entityManager= $entityManager;
-                      $this->jugadorRepository= $jugadorRepository;
+                      $this->playerRepository= $playerRepository;
+                      $this->validator= $validator;
           }
 
 
 
 
-      #[Route('jugador', name:'jugador_indice', methods:"GET")]
+      #[Route('player', name:'player_index', methods:"GET")]
           public function index():Response{
-          $jugador = $this->jugadorRepository->findALL();
+          $player = $this->playerRepository->findALL();
 
-             return $this->json($jugador, 200,[], ['groups'=>'jugador'] );
+             return $this->json($player, 200,[], ['groups'=>'player'] );
 
             }
 
 
-    #[Route('jugador/create',name: 'jugador_crear', methods:"POST")]
+    #[Route('player/create',name: 'player_create', methods:"POST")]
 
-    public function create(Request $request): Response
+    public function create(Request $request, PlayerRepository $playerRepository): Response
     {
-        $data = json_decode($request->getContent(), true);
 
-        $jugador = new Player();
-        $jugador->setDni($data['dni'] ?? 'Default dni')
-            ->setName($data['name'] ?? 'Default name')
-            ->setLast_name($data['last_name'] ?? 'Default last_name')
-            ->setTeam($data['team'] ?? 'Default team')
-            ->setSalary(rand(1000, 2000))
-            ->setPosition($data['position'] ?? 'Default position')
-            ->setDorsal(rand(0 , 20))
-            ->setEmail($data['email'] ?? 'Default email')
-            ->setPhone($data['phone'] ?? 'Default phone');
+       $player = new Player();
+       $form = $this->createForm(PlayerType::class, $player);
 
-        $this->entityManager->persist($jugador);
-        $this->entityManager->flush();
-//      return $this->json($jugador, 201, [], ['groups' => 'club']);
-        return new Response(sprintf(
-            'dni: %s nombre:%s apellidos: %s equipo: %s salario: %d posicion: %s dorsal: %d email: %s telefono: %s',
-            $jugador->getDni(),
-                $jugador->getName(),
-                $jugador->getLast_name(),
-                $jugador->getTeam(),
-                $jugador->getSalary(),
-                $jugador->getPosition(),
-                $jugador->getDorsal(),
-                $jugador->getEmail(),
-                $jugador->getPhone()
-        ));
+
+       $form->handleRequest($request);
+
+       if($form->isSubmitted() && $form->isValid()){
+           $playerRepository->save($player, true);
+           return new JsonResponse(['message'=> 'Player create successfully'], Response::HTTP_CREATED);
+       }
+
+       return new JsonResponse(['errors'=>FormErrorsToArray::staticParseErrorsToArray($form)],Response::HTTP_BAD_REQUEST);
+
 
     }
 
 
-       #[Route('jugador/delete/{id}', name:'jugador_eliminar', methods:"DELETE")]
-       public function delete(Player $jugador):Response{
-           $this->entityManager->remove($jugador);
+       #[Route('player/delete/{id}', name:'player_delete', methods:"DELETE")]
+       public function delete(Player $player):Response{
+           $this->entityManager->remove($player);
            $this->entityManager->flush();
 
            return $this->json(null,204);
        }
 
 
-       #[Route('jugador/update/{id}', name:'jugador_actualizar', methods: "PUT")]
-        public function update(Request $request, Player $jugador):Response{
+       #[Route('player/update/{id}', name:'player_update', methods: "PUT")]
+        public function update(Request $request, Player $player):Response{
 
               $data = json_decode($request->getContent(), true);
 
-              $jugador->setDni('23456J');
-              $jugador->setName('Marta');
-              $jugador->setLast_name('Perez');
-              $jugador->setTeam('Teis');
-              $jugador->setSalary(rand(1000,2000));
-              $jugador->setPosition('central');
-              $jugador->setDorsal(rand(0,20));
-              $jugador->setEmail('hsdikijdsfn');
-              $jugador->setPhone('212342');
+              $player->setDni('23456J');
+              $player->setName('Marta');
+              $player->setLastName('Perez');
+              $player->setTeam('Teis');
+              $player->setSalary(rand(1000,2000));
+              $player->setPosition('central');
+              $player->setDorsal(rand(0,20));
+              $player->setEmail('hsdikijdsfn');
+              $player->setPhone('212342');
 
               $this->entityManager->flush();
 
               return new Response(sprintf(
-                  'dni: %s nombre:%s apellidos: %s equipo: %s salario: %d posicion: %s dorsal: %d email: %s telefono: %s',
-                      $jugador->getDni(),
-                      $jugador->getName(),
-                      $jugador->getLast_name(),
-                      $jugador->getTeam(),
-                      $jugador->getSalary(),
-                      $jugador->getPosition(),
-                      $jugador->getDorsal(),
-                      $jugador->getEmail(),
-                      $jugador->getPhone()
+                  'dni: %s name:%s last_name: %s team: %s salary: %d position: %s dorsal: %d email: %s phone: %s',
+                      $player->getDni(),
+                      $player->getName(),
+                      $player->getLastName(),
+                      $player->getTeam(),
+                      $player->getSalary(),
+                      $player->getPosition(),
+                      $player->getDorsal(),
+                      $player->getEmail(),
+                      $player->getPhone()
                   ));
        }
 
 
-       #[Route('jugador/show/{id}', name:'jugador_mostrar',methods: "GET")]
-        public function show(Player $jugador):Response{
+       #[Route('player/show/{id}', name:'player_show',methods: "GET")]
+        public function show(Player $player):Response{
                      return new Response(sprintf(
-               'dni: %s nombre:%s apellidos: %s equipo: %s salario: %d posicion: %s dorsal: %d email: %s telefono: %s',
-                   $jugador->getDni(),
-                   $jugador->getName(),
-                   $jugador->getLast_name(),
-                   $jugador->getTeam(),
-                   $jugador->getSalary(),
-                   $jugador->getPosition(),
-                   $jugador->getDorsal(),
-                   $jugador->getEmail(),
-                   $jugador->getPhone()
+               'dni: %s name: %s last_name: %s team: %s salary: %d position: %s dorsal: %d email: %s phone: %s',
+                   $player->getDni(),
+                   $player->getName(),
+                   $player->getLastName(),
+                   $player->getTeam(),
+                   $player->getSalary(),
+                   $player->getPosition(),
+                   $player->getDorsal(),
+                   $player->getEmail(),
+                   $player->getPhone()
             ));
        }
 

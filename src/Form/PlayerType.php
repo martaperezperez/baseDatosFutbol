@@ -6,22 +6,65 @@ use App\Entity\Player;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 class PlayerType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('dni')
-            ->add('name')
-            ->add('last_name')
-            ->add('team')
-            ->add('salary')
-            ->add('position')
-            ->add('dorsal')
-            ->add('email')
-            ->add('phone')
+            ->add('dni', null, [
+                'constraints' => [
+                    new NotBlank(),
+                    ],
+                ])
+            ->add('name', null, [
+                'constraints' => [
+                new NotBlank(),
+                ],
+                ])
+            ->add('last_name', null, [
+                'constraints' => [
+                    new NotBlank(),
+                    ],
+                ])
+            ->add('team', null, [
+                'constraints' => [
+                    new NotBlank(),
+                    ],
+                ])
+            ->add('salary', null, [
+                'constraints' => [
+                    new NotBlank(),
+                    ],
+                ])
+            ->add('position', null, [
+                'constraints' => [
+                    new NotBlank(),
+                    ],
+                ])
+            ->add('dorsal', null, [
+                'constraints' => [
+                    new NotBlank(),
+                    ],
+                ])
+            ->add('email', null, [
+                'constraints' => [
+                    new NotBlank(),
+                    ],
+                ])
+            ->add('phone', null, [
+                'constraints' => [
+                    new NotBlank(),
+                    ]
+            ])
         ;
+    }
+    public function getBlockPrefix()
+    {
+     return '';
     }
 
     public function configureOptions(OptionsResolver $resolver): void
