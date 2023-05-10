@@ -122,17 +122,49 @@ ase de datos que gestiones clubes, jugadores y entrenadores
 - para darle las migraciones necesarias y funcione hacemos estos comandos ```symfony console make:migrations```  ```symfony console doctrine :migrations:migrate```
 #### Ahora vamos a crear las clases Controller de cada clase que atiende a los mensajes que manda el usuario 
 - ```bin/console make:controller ClubContoller```
-- ```bin/console make:controller EntrenadorContoller```
+- ```bin/console make:controller coachContoller```
 - ```bin/console make:controller PlayerContoller```
 
 ![Controllers.png](src%2Fimagenes%2FControllers.png)
+
+([ClubController.php](src%2FController%2FClubController.php))
+
+([coachController.php](src%2FController%2FcoachController.php))
+
+([PlayerController.php](src%2FController%2FPlayerController.php))
+
+#### En las clases Controllers vamos a meter los metodos create, update,delete, show, index. vamos a ver estos metodos como ejemplo en la clase club
+#### El constructor, en el que fuera del constructor ponemos en privado a las entidades , ```$entityManager```, ```$clubRepository``` de la clase ClubRepository y ```$validator```, y dentro del constructor los llamamos :
+
+![constructorClaseClub.png](src%2Fimagenes%2FconstructorClaseClub.png)
+
+####  Arriba antes de entrar al metodo ponemos la ruta por la que queremos llamar a este metodo.
+#### Metodo Create:
+![MetodoCreateClub.png](src%2Fimagenes%2FMetodoCreateClub.png)
+
+#### Metodo Index:
+
+![MetodoIndexClub.png](src%2Fimagenes%2FMetodoIndexClub.png)
+
+#### Metodo Update:
+
+![MetodoUpdateClub.png](src%2Fimagenes%2FMetodoUpdateClub.png)
+
+#### Metodo Delete:
+
+![MetodoDeleteClub.png](src%2Fimagenes%2FMetodoDeleteClub.png)
+
+#### Metodo Show:
+
+![MetodoShowClub.png](src%2Fimagenes%2FMetodoShowClub.png)
+
 
 #### Ahora vamos a crear las clases From que nos servira para recoger los datos y crear formularios
 - ```hp bin/console make:form PlayerType```
 
 ![crearPlayerType.png](src%2Fimagenes%2FcrearPlayerType.png)
 
-- ```hp bin/console make:form EntrenadorType```
+- ```hp bin/console make:form CoachType```
 
 ![crearEntrenadorType.png](src%2Fimagenes%2FcrearEntrenadorType.png)
 
@@ -140,16 +172,42 @@ ase de datos que gestiones clubes, jugadores y entrenadores
 
 ![carpetaForm.png](src%2Fimagenes%2FcarpetaForm.png)
 
+([ClubType.php](src%2FForm%2FClubType.php))
+
+([CoachType.php](src%2FForm%2FCoachType.php))
+
+([PlayerType.php](src%2FForm%2FPlayerType.php))
+
 #### Echo esto, vamos a ver las clases que nos faltan y vamos a utilizar 
 #### Las clases del directorio Entity son Player,Entrenador y Club que guardan en ellas los campos que hay en cada clase que tipo de datos son y los get y set de cada campo
 
 ![entity.png](src%2Fimagenes%2Fentity.png)
 
+([Club.php](src%2FEntity%2FClub.php))
 
-#### Para ver si los metodos de create, update,delete, show, index que pusimos en la clase Controller de cada tabbla funciona vamos a utilizar la aplicacion postman en la que pondremos la Url de busqueda de cada metodo para ver si funciona con nginx
+([Coach.php](src%2FEntity%2FCoach.php))
+
+([Player.php](src%2FEntity%2FPlayer.php))
+
+#### La clase de errores para que te especifica que error da cuando envias el metodo create o update.
+
+![ClaseErrores.png](src%2Fimagenes%2FClaseErrores.png)
+
+![CodigoClaseErrores.png](src%2Fimagenes%2FCodigoClaseErrores.png)
+
+([FormErrorsToArray.php](src%2FHelper%2FFormErrorsToArray.php))
+#### Clase Listener que recoge que los datos se tienen que enviar un JSON
+
+![ClaseListener.png](src%2Fimagenes%2FClaseListener.png)
+
+![CodigoClaseListener.png](src%2Fimagenes%2FCodigoClaseListener.png)
+
+([RequestJsonListener.php](src%2FListener%2FRequestJsonListener.php))
+
+#### Para ver si los metodos de create, update,delete, show, index que pusimos en la clase Controller de cada tabla funciona vamos a utilizar la aplicacion postman en la que pondremos la Url de busqueda de cada metodo para ver si funciona con nginx
 
 
-#### Vamos a crear una nueva coleccion llamada baseDatosFutbol y dentro de ella vamos a crear 3 carpetas que se van a llamar PLayer,Entrenador y Club como nuestras clases entity y un request que se va a llamar pagina inicia que nos va a llevar a la pagina inicial.
+#### En postman vamos a crear una nueva coleccion llamada baseDatosFutbol y dentro de ella vamos a crear 3 carpetas que se van a llamar PLayer,Entrenador y Club como nuestras clases entity y un request que se va a llamar pagina inicia que nos va a llevar a la pagina inicial.
 #### Dentro de cada carpeta vamos a crear 5 request cada uno por un metodo(create, delete, update, show, index) que va tener cada carpeta referente a cada clase.
 
 ![postmanOrganizacion.png](src%2Fimagenes%2FpostmanOrganizacion.png)
@@ -158,5 +216,9 @@ ase de datos que gestiones clubes, jugadores y entrenadores
 
 ![postmanPaginaInicial.png](src%2Fimagenes%2FpostmanPaginaInicial.png)
 
+#### Ahora vamos a ver si el metodo Create funciona en la clase Club entramos en el request create Clubs en la opcion Body le damos a la opcion raw y a la izquierda de todo a JSON metemos el codigo Json como vemos en el ejemplo siguiente:
+![CreateClubs.png](src%2Fimagenes%2FCreateClubs.png)
 
+#### Despues de esto le damos a enviar y nos tiene que llegr un mensaje en la parte de abajo de que el club a sido creado correctamente
+![ClubCreadoCorrectamente.png](src%2Fimagenes%2FClubCreadoCorrectamente.png)
 
