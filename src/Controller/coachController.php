@@ -7,11 +7,12 @@ use App\Form\CoachType;
 use App\Helper\FormErrorsToArray;
 use App\Repository\CoachRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class coachController extends AbstractController
 {
@@ -68,33 +69,17 @@ class coachController extends AbstractController
 
 
     #[Route('coach/update/{id}', name: 'coach_update', methods: "PUT")]
-    public function update(Request $request, Coach $coach): Response{
+    public function update(Request $request, Coach $coach, CoachRepository $coachRepository):Response{
 
+        $form = $this->createForm(CoachType::class, $coach,["method"=>"PUT"]);
+        $form->handleRequest($request);
+        if($form->isSubmitted()&& $form->isValid()){
+            $coach= $form->getData();
+            $coachRepository->save($coach,true);
+            return new JsonResponse(['message'=>'Coach update successfully'], Response::HTTP_CREATED);
+        }
 
-        $data = json_decode ($request->getContent(), true);
-
-
-        $coach->setDni('193275Y');
-        $coach->setName('Marta');
-        $coach->setLastname('Perez');
-        $coach->setTeam('Mongolos');
-        $coach->setSalary(rand(1000,2000));
-        $coach->setEmail('kjifdouor@gmail.com');
-        $coach->setPhone('68352450');
-
-        $this->entityManager->flush();
-
-        return new Response(sprintf(
-            'dni: %s name: %s last_name: %s team: %s salary: %d email: %s phone: %d',
-            $coach->getDni(),
-            $coach->getName(),
-            $coach->getLastname(),
-            $coach->getTeam(),
-            $coach->getSalary(),
-            $coach->getEmail(),
-            $coach->getPhone()
-        ));
-
+        return  new JsonResponse(['errors'=>FormErrorsToArray::staticParseErrorsToArray($form)],Response::HTTP_BAD_REQUEST);
     }
 
     #[Route('coach/show/{id}', name: 'coach_show', methods: "GET")]

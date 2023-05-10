@@ -79,26 +79,17 @@ class ClubController extends AbstractController
 
 
     #[Route('club/update/{id}', name:'club_update', methods:"PUT")]
-    public function update(Request $request, Club $club): Response{
+    public function update(Request $request, Club $club,ClubRepository $clubRepository): Response{
 
+        $form = $this->createForm(ClubType::class, $club, ["method"=>"PUT"]);
+        $form->handleRequest($request);
+        if($form->isSubmitted()&&$form->isValid()){
+            $club= $form->getData();
+            $clubRepository->save($club, true);
+            return new JsonResponse(['message'=>'Club update successfully'], Response::HTTP_CREATED);
+        }
 
-        $data = json_decode($request->getContent(), true);
-
-
-        $club->setName('Marta');
-        $club->setBudget(rand(1000,2000));
-        $club->setEmail('jahsfir@gmail.com');
-        $club->setPhone('66279502');
-
-        $this->entityManager->flush();
-
-        return new Response(sprintf(
-            'name: %s budget: %d email: %s phone: %s',
-            $club->getName(),
-            $club->getBudget(),
-            $club->getEmail(),
-            $club->getPhone()
-        ));
+        return new JsonResponse(['errors'=>FormErrorsToArray::staticParseErrorsToArray($form), Response::HTTP_BAD_REQUEST]);
 
     }
 

@@ -34,14 +34,14 @@ class PlayerController extends AbstractController
             private $entityManager;
             private $playerRepository;
 
-            private $validator;
+           // private $validator;
 
 
       public function __construct(EntityManagerInterface $entityManager, PlayerRepository $playerRepository, ValidatorInterface $validator)
           {
                       $this->entityManager= $entityManager;
                       $this->playerRepository= $playerRepository;
-                      $this->validator= $validator;
+                     // $this->validator= $validator;
           }
 
 
@@ -88,34 +88,18 @@ class PlayerController extends AbstractController
 
 
        #[Route('player/update/{id}', name:'player_update', methods: "PUT")]
-        public function update(Request $request, Player $player):Response{
+        public function update(Request $request, Player $player,PlayerRepository $playerRepository):Response{
 
-              $data = json_decode($request->getContent(), true);
+          $form = $this->createForm(PlayerType::class, $player ,["method"=> "PUT"]);
+          $form->handleRequest($request);
+           if($form->isSubmitted() && $form->isValid()){
+               $player = $form->getData();
+               $playerRepository->save($player, true);
+               return new JsonResponse(['message'=> 'Player update successfully'], Response::HTTP_CREATED);
+           }
 
-              $player->setDni('23456J');
-              $player->setName('Marta');
-              $player->setLastName('Perez');
-              $player->setTeam('Teis');
-              $player->setSalary(rand(1000,2000));
-              $player->setPosition('central');
-              $player->setDorsal(rand(0,20));
-              $player->setEmail('hsdikijdsfn');
-              $player->setPhone('212342');
+           return new JsonResponse(['errors'=>FormErrorsToArray::staticParseErrorsToArray($form)],Response::HTTP_BAD_REQUEST);
 
-              $this->entityManager->flush();
-
-              return new Response(sprintf(
-                  'dni: %s name:%s last_name: %s team: %s salary: %d position: %s dorsal: %d email: %s phone: %s',
-                      $player->getDni(),
-                      $player->getName(),
-                      $player->getLastName(),
-                      $player->getTeam(),
-                      $player->getSalary(),
-                      $player->getPosition(),
-                      $player->getDorsal(),
-                      $player->getEmail(),
-                      $player->getPhone()
-                  ));
        }
 
 
