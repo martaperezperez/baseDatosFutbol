@@ -4,10 +4,17 @@ namespace App\Entity;
 
 use App\Repository\PlayerRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 #[ORM\Entity(repositoryClass: PlayerRepository::class)]
-class Player
+class Player extends Club
 {
+
+
+ 
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -39,6 +46,14 @@ class Player
 
     #[ORM\Column]
     private ?int $phone = null;
+
+    #[ORM\ManyToOne(inversedBy: 'players')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Club $ClubId = null;
+
+    #[ORM\ManyToOne(inversedBy: 'ClubId')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Club $club = null;
 
     public function getId(): ?int
     {
@@ -149,6 +164,46 @@ class Player
     public function setPhone(int $phone): self
     {
         $this->phone = $phone;
+
+        return $this;
+    }
+
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata){
+        $metadata->addConstraint(new UniqueEntity([
+            'fields'=>'dni',
+            'message'=>'The dni is already exists'
+        ]))
+            ->addConstraint(new UniqueEntity([
+                'fields'=>'email',
+                'message'=>'The email is already exists'
+            ]))
+            ->addConstraint(new UniqueEntity([
+                'fields'=>'phone',
+                'message'=>'The phone is already exists'
+            ]));
+    }
+
+    public function getClubId(): ?Club
+    {
+        return $this->ClubId;
+    }
+
+    public function setClubId(?Club $ClubId): self
+    {
+        $this->ClubId = $ClubId;
+
+        return $this;
+    }
+
+    public function getClub(): ?Club
+    {
+        return $this->club;
+    }
+
+    public function setClub(?Club $club): self
+    {
+        $this->club = $club;
 
         return $this;
     }

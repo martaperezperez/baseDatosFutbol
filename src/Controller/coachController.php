@@ -29,6 +29,7 @@ class coachController extends AbstractController
 
     }
 
+
     #[Route('coach', name:'coach_index', methods:"GET")]
     public function index():Response{
 

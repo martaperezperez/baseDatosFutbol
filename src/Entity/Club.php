@@ -3,11 +3,17 @@
 namespace App\Entity;
 
 use App\Repository\ClubRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 #[ORM\Entity(repositoryClass: ClubRepository::class)]
 class Club
 {
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -24,6 +30,18 @@ class Club
 
     #[ORM\Column]
     private ?int $phone = null;
+
+    #[ORM\OneToMany(mappedBy: 'ClubId', targetEntity: Player::class)]
+    private Collection $players;
+
+    #[ORM\OneToMany(mappedBy: 'club', targetEntity: Player::class)]
+    private Collection $ClubId;
+
+    public function __construct()
+    {
+        $this->players = new ArrayCollection();
+        $this->ClubId = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -77,4 +95,81 @@ class Club
 
         return $this;
     }
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata){
+        $metadata->addConstraint(new UniqueEntity([
+            'fields'=>'name',
+            'message'=>'The name is already exists'
+        ]))
+            ->addConstraint(new UniqueEntity([
+                'fields'=>'email',
+                'message'=>'The email is already exists'
+            ]))
+            ->addConstraint(new UniqueEntity([
+                'fields'=>'phone',
+                'message'=>'The phone is already exists'
+            ]));
+    }
+
+    /**
+     * @return Collection<int, Player>
+     */
+    public function getPlayers(): Collection
+    {
+        return $this->players;
+    }
+
+    public function addPlayer(Player $player): self
+    {
+        if (!$this->players->contains($player)) {
+            $this->players->add($player);
+            $player->setClubId($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlayer(Player $player): self
+    {
+        if ($this->players->removeElement($player)) {
+            // set the owning side to null (unless already changed)
+            if ($player->getClubId() === $this) {
+                $player->setClubId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Player>
+     */
+    public function getClubId(): Collection
+    {
+        return $this->ClubId;
+    }
+
+    public function addClubId(Player $clubId): self
+    {
+        if (!$this->ClubId->contains($clubId)) {
+            $this->ClubId->add($clubId);
+            $clubId->setClub($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClubId(Player $clubId): self
+    {
+        if ($this->ClubId->removeElement($clubId)) {
+            // set the owning side to null (unless already changed)
+            if ($clubId->getClub() === $this) {
+                $clubId->setClub(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 }

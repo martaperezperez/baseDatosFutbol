@@ -4,6 +4,9 @@ namespace App\Entity;
 
 use App\Repository\CoachRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 #[ORM\Entity(repositoryClass: CoachRepository::class)]
 class Coach
@@ -24,6 +27,7 @@ class Coach
 
     #[ORM\Column(length: 255)]
     private ?string $team = null;
+
 
     #[ORM\Column]
     private ?float $salary = null;
@@ -122,4 +126,21 @@ class Coach
 
         return $this;
     }
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata){
+        $metadata-> addConstraint(new UniqueEntity([
+            'fields'=>'dni',
+            'message'=>'The dni is already exists'
+        ]))
+        ->addConstraint(new UniqueEntity([
+            'fields'=>'email',
+            'message'=>'The email is already exists'
+        ]))
+            ->addConstraint(new UniqueEntity([
+                'fields'=>'phone',
+                'message'=>'he phone is already exists'
+            ]));
+    }
+
+
 }

@@ -4,10 +4,12 @@ namespace App\Controller;
 
 
 use App\Entity\Club;
+use App\Entity\Player;
 use App\Form\ClubType;
+use App\Form\PlayerType;
 use App\Helper\FormErrorsToArray;
 use App\Repository\ClubRepository;
-use ContainerBtxjtRj\getDebug_ArgumentResolver_NotTaggedControllerService;
+use App\Repository\PlayerRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -33,14 +35,14 @@ class ClubController extends AbstractController
     private $entityManager;
     private  $clubRepository;
 
-    private $validator;
 
 
-    public function __construct(EntityManagerInterface $entityManager, ClubRepository $clubRepository, ValidatorInterface $validator)
+
+    public function __construct(EntityManagerInterface $entityManager, ClubRepository $clubRepository)
     {
         $this->entityManager = $entityManager;
         $this->clubRepository = $clubRepository;
-        $this->validator=$validator;
+
     }
     #[Route('club', name: 'club_index', methods: "GET")]
     public function index():Response{
@@ -103,5 +105,32 @@ class ClubController extends AbstractController
             $club->getPhone()
         ));
     }
+
+    #[Route('club/{id}/create_player/', name: 'club_create_player', methods:"POST")]
+
+    public function cratePlayer(Request $request, Club $club ,PlayerRepository $playerRepository): Response{
+
+        $player = new Player();
+        $form = $this->createForm(PlayerType::class, $player);
+
+        $form->handleRequest($request);
+
+        $playerRepository->save($player,true);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $playerRepository->save($player, true);
+            return new JsonResponse(['message'=>'PlayerCreate successfully'], Response::HTTP_CREATED);
+        }
+
+
+        //return  $this->redirectToRoute('club_show',['clubId'=> $club->getId()]);
+
+        return new JsonResponse(['errors'=>FormErrorsToArray::staticParseErrorsToArray($form)],Response::HTTP_BAD_REQUEST);
+
+    }
+
+
+
+
 
 }
