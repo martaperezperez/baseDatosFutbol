@@ -1,7 +1,7 @@
 # Mini Aplicación Symfony API Rest 
 ## Mini Aplicación con base de datos que gestiones clubes, jugadores y entrenadores
 
-### Primero creamos un proyecto en symfony 
+## _Proyecto en Symfoni creación_
 #### En la terminal ponemos el proximo comando,para entrar en el directorio que queremos crear el proyecto:
 - ```cd/var/www```
 #### Con el siguiente comando creamos el proyecto en symfony que se va a llamar baseDatosFutbol:
