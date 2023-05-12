@@ -38,6 +38,9 @@ class Coach
     #[ORM\Column]
     private ?int $phone = null;
 
+    #[ORM\ManyToOne(inversedBy: 'CoachId')]
+    private ?Club $club = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -140,6 +143,18 @@ class Coach
                 'fields'=>'phone',
                 'message'=>'he phone is already exists'
             ]));
+    }
+
+    public function getClub(): ?Club
+    {
+        return $this->club;
+    }
+
+    public function setClub(?Club $club): self
+    {
+        $this->club = $club;
+
+        return $this;
     }
 
 

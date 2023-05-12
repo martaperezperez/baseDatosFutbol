@@ -15,9 +15,6 @@ class Club
 {
 
 
-
-
-
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -38,9 +35,13 @@ class Club
     #[ORM\OneToMany(mappedBy: 'club', targetEntity: Player::class)]
     private Collection $PlayerId;
 
+    #[ORM\OneToMany(mappedBy: 'club', targetEntity: Coach::class)]
+    private Collection $CoachId;
+
     public function __construct()
     {
         $this->PlayerId = new ArrayCollection();
+        $this->CoachId = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -135,6 +136,36 @@ class Club
             // set the owning side to null (unless already changed)
             if ($playerId->getClub() === $this) {
                 $playerId->setClub(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Coach>
+     */
+    public function getCoachId(): Collection
+    {
+        return $this->CoachId;
+    }
+
+    public function addCoachId(Coach $coachId): self
+    {
+        if (!$this->CoachId->contains($coachId)) {
+            $this->CoachId->add($coachId);
+            $coachId->setClub($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCoachId(Coach $coachId): self
+    {
+        if ($this->CoachId->removeElement($coachId)) {
+            // set the owning side to null (unless already changed)
+            if ($coachId->getClub() === $this) {
+                $coachId->setClub(null);
             }
         }
 

@@ -78,6 +78,11 @@ class CoachType extends AbstractType
                     new NotBlank([
                         'message' => 'The salary cannot be empty'
                     ]),
+                    new Range([
+                        'min'=>1000,
+                        'max'=>40000,
+                        'notInRangeMessage'=>'The salary must be between {{ min }} and {{ max }}'
+                    ])
 
                 ],
             ])
