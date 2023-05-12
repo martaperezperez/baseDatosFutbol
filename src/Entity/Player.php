@@ -9,11 +9,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 #[ORM\Entity(repositoryClass: PlayerRepository::class)]
-class Player extends Club
+class Player
 {
 
-
- 
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -47,12 +45,7 @@ class Player extends Club
     #[ORM\Column]
     private ?int $phone = null;
 
-    #[ORM\ManyToOne(inversedBy: 'players')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Club $ClubId = null;
-
-    #[ORM\ManyToOne(inversedBy: 'ClubId')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(inversedBy: 'PlayerId')]
     private ?Club $club = null;
 
     public function getId(): ?int
@@ -182,18 +175,6 @@ class Player extends Club
                 'fields'=>'phone',
                 'message'=>'The phone is already exists'
             ]));
-    }
-
-    public function getClubId(): ?Club
-    {
-        return $this->ClubId;
-    }
-
-    public function setClubId(?Club $ClubId): self
-    {
-        $this->ClubId = $ClubId;
-
-        return $this;
     }
 
     public function getClub(): ?Club

@@ -107,11 +107,11 @@ class ClubController extends AbstractController
     }
 
     #[Route('club/{id}/create_player/', name: 'club_create_player', methods:"POST")]
-
     public function cratePlayer(Request $request, Club $club ,PlayerRepository $playerRepository): Response{
 
         $player = new Player();
-        $form = $this->createForm(PlayerType::class, $player);
+        $player->setClub($club);
+        $form = $this->createForm(PlayerType::class, $player, ["method"=> "POST"]);
 
         $form->handleRequest($request);
 

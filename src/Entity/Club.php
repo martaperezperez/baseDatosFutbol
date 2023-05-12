@@ -14,6 +14,10 @@ use Symfony\Component\Validator\Mapping\ClassMetadata;
 class Club
 {
 
+
+
+
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -31,16 +35,12 @@ class Club
     #[ORM\Column]
     private ?int $phone = null;
 
-    #[ORM\OneToMany(mappedBy: 'ClubId', targetEntity: Player::class)]
-    private Collection $players;
-
     #[ORM\OneToMany(mappedBy: 'club', targetEntity: Player::class)]
-    private Collection $ClubId;
+    private Collection $PlayerId;
 
     public function __construct()
     {
-        $this->players = new ArrayCollection();
-        $this->ClubId = new ArrayCollection();
+        $this->PlayerId = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -114,57 +114,27 @@ class Club
     /**
      * @return Collection<int, Player>
      */
-    public function getPlayers(): Collection
+    public function getPlayerId(): Collection
     {
-        return $this->players;
+        return $this->PlayerId;
     }
 
-    public function addPlayer(Player $player): self
+    public function addPlayerId(Player $playerId): self
     {
-        if (!$this->players->contains($player)) {
-            $this->players->add($player);
-            $player->setClubId($this);
+        if (!$this->PlayerId->contains($playerId)) {
+            $this->PlayerId->add($playerId);
+            $playerId->setClub($this);
         }
 
         return $this;
     }
 
-    public function removePlayer(Player $player): self
+    public function removePlayerId(Player $playerId): self
     {
-        if ($this->players->removeElement($player)) {
+        if ($this->PlayerId->removeElement($playerId)) {
             // set the owning side to null (unless already changed)
-            if ($player->getClubId() === $this) {
-                $player->setClubId(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Player>
-     */
-    public function getClubId(): Collection
-    {
-        return $this->ClubId;
-    }
-
-    public function addClubId(Player $clubId): self
-    {
-        if (!$this->ClubId->contains($clubId)) {
-            $this->ClubId->add($clubId);
-            $clubId->setClub($this);
-        }
-
-        return $this;
-    }
-
-    public function removeClubId(Player $clubId): self
-    {
-        if ($this->ClubId->removeElement($clubId)) {
-            // set the owning side to null (unless already changed)
-            if ($clubId->getClub() === $this) {
-                $clubId->setClub(null);
+            if ($playerId->getClub() === $this) {
+                $playerId->setClub(null);
             }
         }
 
