@@ -1,14 +1,10 @@
 # Mini Aplicación Symfony API Rest 
-## Mini Apli
-
-cación con b
-
-ase de datos que gestiones clubes, jugadores y entrenadores
+## Mini Aplicación con base de datos que gestiones clubes, jugadores y entrenadores
 
 ### Primero creamos un proyecto en symfony 
 #### En la terminal ponemos el proximo comando,para entrar en el directorio que queremos crear el proyecto:
 - ```cd/var/www```
-#### Con el siguiente comando crwamos el proyecto en symfony que se va a llamar baseDatosFutbol:
+#### Con el siguiente comando creamos el proyecto en symfony que se va a llamar baseDatosFutbol:
   - ```sudo symfony ne baseDatosFutbol"```
 #### Despues le metemos los permisos necesarios:
 - ```sudo chmod 775 baseDatosFutbol/ -Rf```
@@ -16,7 +12,7 @@ ase de datos que gestiones clubes, jugadores y entrenadores
 
 ![carpetaProyecto.png](src%2Fimagenes%2FcarpetaProyecto.png)
 
-### Tambien le damos permisos en ngixn siguiendo lossiguiente comandos:
+### Tambien le damos permisos en ngixn siguiendo los siguiente comandos:
 - ```cd /etc/nginx/sites-avaible```
 - ```vim baseDatosFutbol```
 -  insertamos el siguiente codigo:
@@ -85,6 +81,7 @@ ase de datos que gestiones clubes, jugadores y entrenadores
 ![nginxFUncionando.png](src%2Fimagenes%2FnginxFUncionando.png)
 
 - ```sudo service nginx reload```
+## _Base de datos_
 #### Ahora entramos en el proyecto por la terminal
 -```cd /cd/var/www/baseDatosFutbol```
 - Vemos si nos esta funcionando el symfony: ```symfony serve -d```
@@ -120,7 +117,9 @@ ase de datos que gestiones clubes, jugadores y entrenadores
 ![tablaClub.png](src%2Fimagenes%2FtablaClub.png)
 
 - para darle las migraciones necesarias y funcione hacemos estos comandos ```symfony console make:migrations```  ```symfony console doctrine :migrations:migrate```
-#### Ahora vamos a crear las clases Controller de cada clase que atiende a los mensajes que manda el usuario 
+
+## _PhpStorm_
+### Ahora vamos a crear las clases Controller de cada clase que atiende a los mensajes que manda el usuario 
 - ```bin/console make:controller ClubContoller```
 - ```bin/console make:controller coachContoller```
 - ```bin/console make:controller PlayerContoller```
@@ -158,8 +157,20 @@ ase de datos que gestiones clubes, jugadores y entrenadores
 
 ![MetodoShowClub.png](src%2Fimagenes%2FMetodoShowClub.png)
 
+#### En la clase Club tambien vamos a meter el metodo de sar de alta un player en el club, dar de alta un coach en el club, dar de baja un player del club y dar de baja un coach del club
 
-#### Ahora vamos a crear las clases From que nos servira para recoger los datos y crear formularios
+#### Metodo dar de alta un player en el club
+
+
+#### Metodo dar de alta un coach en el club
+
+
+#### Metodo dar de baja un player de un club
+
+
+#### Metodo dar de baja un coach de un club
+
+### Ahora vamos a crear las clases From que nos servira para recoger los datos y crear formularios
 - ```hp bin/console make:form PlayerType```
 
 ![crearPlayerType.png](src%2Fimagenes%2FcrearPlayerType.png)
@@ -179,7 +190,7 @@ ase de datos que gestiones clubes, jugadores y entrenadores
 ([PlayerType.php](src%2FForm%2FPlayerType.php))
 
 #### Echo esto, vamos a ver las clases que nos faltan y vamos a utilizar 
-#### Las clases del directorio Entity son Player,Entrenador y Club que guardan en ellas los campos que hay en cada clase que tipo de datos son y los get y set de cada campo
+### Las clases del directorio Entity son Player,Entrenador y Club que guardan en ellas los campos que hay en cada clase que tipo de datos son y los get y set de cada campo
 
 ![entity.png](src%2Fimagenes%2Fentity.png)
 
@@ -189,14 +200,14 @@ ase de datos que gestiones clubes, jugadores y entrenadores
 
 ([Player.php](src%2FEntity%2FPlayer.php))
 
-#### La clase de errores para que te especifica que error da cuando envias el metodo create o update.
+### La clase de errores para que te especifica que error da cuando envias el metodo create o update.
 
 ![ClaseErrores.png](src%2Fimagenes%2FClaseErrores.png)
 
 ![CodigoClaseErrores.png](src%2Fimagenes%2FCodigoClaseErrores.png)
 
 ([FormErrorsToArray.php](src%2FHelper%2FFormErrorsToArray.php))
-#### Clase Listener que recoge que los datos se tienen que enviar un JSON
+### Clase Listener que recoge que los datos se tienen que enviar un JSON
 
 ![ClaseListener.png](src%2Fimagenes%2FClaseListener.png)
 
@@ -204,6 +215,15 @@ ase de datos que gestiones clubes, jugadores y entrenadores
 
 ([RequestJsonListener.php](src%2FListener%2FRequestJsonListener.php))
 
+### Directorio Validator que dentro tiene una clase SalaryValidator
+
+#### La clase SalaryValidator sirve para que cuando el Salaryo del player o Coach sea mayor que el budget de el Club de error y no deje crear el player o el coach
+![ClaseValidator.png](src%2Fimagenes%2FClaseValidator.png)
+
+[SalaryValidator.php](src%2FValidator%2FSalaryValidator.php)
+
+
+## _POSTMAN_ 
 #### Para ver si los metodos de create, update,delete, show, index que pusimos en la clase Controller de cada tabla funciona vamos a utilizar la aplicacion postman en la que pondremos la Url de busqueda de cada metodo para ver si funciona con nginx
 
 
@@ -219,6 +239,6 @@ ase de datos que gestiones clubes, jugadores y entrenadores
 #### Ahora vamos a ver si el metodo Create funciona en la clase Club entramos en el request create Clubs en la opcion Body le damos a la opcion raw y a la izquierda de todo a JSON metemos el codigo Json como vemos en el ejemplo siguiente:
 ![CreateClubs.png](src%2Fimagenes%2FCreateClubs.png)
 
-#### Despues de esto le damos a enviar y nos tiene que llegr un mensaje en la parte de abajo de que el club a sido creado correctamente
+#### Despues de esto le damos a enviar y nos tiene que llegar un mensaje en la parte de abajo de que el club a sido creado correctamente
 ![ClubCreadoCorrectamente.png](src%2Fimagenes%2FClubCreadoCorrectamente.png)
 
