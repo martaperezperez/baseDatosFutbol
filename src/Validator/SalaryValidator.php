@@ -3,43 +3,50 @@
 namespace App\Validator;
 
 use App\Entity\Club;
-use App\Entity\Coach;
+
 use App\Entity\Player;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 class SalaryValidator extends ConstraintValidator
 {
-    public function validatePlayerSalary(Player $player , Club $club)
+    /**
+     * @throws \Exception
+     */
+    public function validatePlayerSalary(Player $player)
     {
+
+        $club=$player->getClub();
         /* @var App\Validator\Salary $constraint */
 
-        $playerSalary = $player->getSalary();
-        $clubBudget = $club->getBudget();
+        $salary = $player->getSalary();
+         $clubBudget = $club->getBudget();
 
-        if ($playerSalary > $clubBudget) {
-            throw new \Exception('Player salary exceeds club budget');
+
+        if (($clubBudget - $salary) < 0 ) {
+
+           throw new \Exception('Player salary exceeds club budget or gives zero or less');
+
+           // return new JsonResponse(['message'=>'Player salary exceeds club budget'], Response::HTTP_CREATED);
         }
 
         return true;
     }
-    public function validateCoachSalary(Coach $coach , Club $club)
-    {
-        /* @var App\Validator\Salary $constraint */
 
-        $playerSalary = $coach->getSalary();
-        $clubBudget = $club->getBudget();
-
-        if ($playerSalary > $clubBudget) {
-            throw new \Exception('Coach salary exceeds club budget');
-        }
-
-        return true;
-    }
 
 
     public function validate(mixed $value, Constraint $constraint)
     {
+        /* @var App\Validator\Salary $constraint */
+
+        $player=$this->context->getRoot()->getData();
+        $this->validatePlayerSalary($player);
         // TODO: Implement validate() method.
+
+
     }
+
+
 }

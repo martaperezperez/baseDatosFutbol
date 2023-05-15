@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Coach;
+use App\Validator\CoachSalary;
+use App\Validator\Salary;
 use PharIo\Manifest\Email;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -82,7 +84,8 @@ class CoachType extends AbstractType
                         'min'=>1000,
                         'max'=>40000,
                         'notInRangeMessage'=>'The salary must be between {{ min }} and {{ max }}'
-                    ])
+                    ]),
+                    new CoachSalary()
 
                 ],
             ])

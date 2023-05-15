@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Player;
+use App\Validator\Salary;
+use App\Validator\SalaryValidator;
 use PharIo\Manifest\Email;
 use PhpParser\Node\Expr\BinaryOp\Equal;
 use Symfony\Component\Form\AbstractType;
@@ -84,8 +86,11 @@ class PlayerType extends AbstractType
                         'min'=>1000,
                         'max'=>40000,
                         'notInRangeMessage'=>'The salary must be between {{ min }} and {{ max }}'
-                    ])
+                    ]),
+                    new Salary(),
+
                     ],
+
                 ])
             ->add('position', null, [
                 'constraints' => [

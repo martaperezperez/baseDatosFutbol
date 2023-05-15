@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Validator\CoachSalaryValidator;
 use App\Validator\SalaryValidator;
 use App\Entity\Club;
 use App\Entity\Coach;
@@ -110,6 +111,7 @@ class ClubController extends AbstractController
         ));
     }
 
+
     #[Route('club/{id}/create_player/', name: 'club_create_player', methods:"POST")]
     public function cratePlayer(Request $request, Club $club ,PlayerRepository $playerRepository): Response{
 
@@ -121,7 +123,7 @@ class ClubController extends AbstractController
 
         $playerRepository->save($player,true);
         try {
-            (new \App\Validator\SalaryValidator)->validatePlayerSalary($player, $club) ;
+            (new \App\Validator\SalaryValidator)->validatePlayerSalary($player) ;
 
 
              if($form->isSubmitted() && $form->isValid()){
@@ -135,47 +137,40 @@ class ClubController extends AbstractController
         }catch(\Exception $e){
             return new Response('Error '.$e->getMessage());
         }
-
-
-
         //return  $this->redirectToRoute('club_show',['clubId'=> $club->getId()]);
 
-
-
     }
+
 
 
     #[Route('club/{id}/create_coach', name: 'club_create_coach', methods: "POST")]
-    public function createCoach(Request $request, Club $club, CoachRepository $coachRepository):Response{
+    public function createCoach(Request $request, Club $club, CoachRepository $coachRepository):Response
+    {
         $coach = new Coach();
         $coach->setClub($club);
-
-        $form= $this->createForm(CoachType::class, $coach, ["method"=>"POST"]);
-
+        $form = $this->createForm(CoachType::class, $coach, ["method" => "POST"]);
         $form->handleRequest($request);
 
+
         $coachRepository->save($coach, true);
+        try {
+            (new \App\Validator\CoachSalaryValidator)->validateCoachSalary($coach);
 
-        try{
-            (new \App\Validator\SalaryValidator)->validateCoachSalary($coach, $club);
-            if ($form->isSubmitted() && $form->isValid()){
+            if ($form->isSubmitted() && $form->isValid()) {
+
                 $coachRepository->save($coach, true);
-                return new JsonResponse(['message'=>'Club Create successfully'], Response::HTTP_CREATED);
+
+                return new JsonResponse(['message' => 'Club Create successfully'], Response::HTTP_CREATED);
+
             }
-            return new JsonResponse(['errors'=>FormErrorsToArray::staticParseErrorsToArray($form)],Response::HTTP_BAD_REQUEST);
-        }catch(\Exception $exception){
-            return new Response('Error '.$exception->getMessage());
+
+            return new JsonResponse(['errors' => FormErrorsToArray::staticParseErrorsToArray($form)], Response::HTTP_BAD_REQUEST);
+
+
+        } catch (\Exception $e) {
+            return new Response('Error ' . $e->getMessage());
+
+
         }
-
-
-
-
-
     }
-
-
-
-
-
-
 }

@@ -10,16 +10,11 @@ use Symfony\Component\Validator\Constraint;
  * @Target({"PROPERTY", "METHOD", "ANNOTATION"})
  */
 #[\Attribute(\Attribute::TARGET_PROPERTY | \Attribute::TARGET_METHOD | \Attribute::IS_REPEATABLE)]
-class Salary extends Constraint
+class CoachSalary extends Constraint
 {
     /*
      * Any public properties become valid options for the annotation.
      * Then, use these in your validator class.
      */
-    public string $message = 'The salary "{{ value }}" is not valid.';
-
-
+    public string $message = 'The value "{{ value }}" is not valid.';
 }
-
-
-
