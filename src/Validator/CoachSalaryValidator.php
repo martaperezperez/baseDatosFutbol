@@ -13,6 +13,7 @@ class CoachSalaryValidator extends ConstraintValidator
      * @throws \Exception
      */
     public function validateCoachSalary(Coach $coach){
+
         $club=$coach->getClub();
 
         $salary = $coach->getSalary();
@@ -35,5 +36,10 @@ class CoachSalaryValidator extends ConstraintValidator
 
         $coach= $this->context->getRoot()->getData();
         $this->validateCoachSalary($coach);
+
+
+        $this->context->buildViolation($constraint->message)
+            ->setParameter('{{ salary }}', $value)
+            ->addViolation();
     }
 }

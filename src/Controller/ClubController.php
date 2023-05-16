@@ -5,17 +5,22 @@ namespace App\Controller;
 use App\Validator\CoachSalaryValidator;
 use App\Validator\SalaryValidator;
 use App\Entity\Club;
+use App\Repository\ClubRepository;
 use App\Entity\Coach;
 use App\Entity\Player;
 use App\Form\ClubType;
 use App\Form\CoachType;
 use App\Form\PlayerType;
 use App\Helper\FormErrorsToArray;
-use App\Repository\ClubRepository;
+
 use App\Repository\CoachRepository;
 use App\Repository\PlayerRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use http\Exception;
+use PhpParser\Comment;
 use PHPUnit\Util\Xml\Validator;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,20 +45,38 @@ class ClubController extends AbstractController
     private $entityManager;
     private  $clubRepository;
 
+    private $playerRepository;
 
 
 
-    public function __construct(EntityManagerInterface $entityManager, ClubRepository $clubRepository)
+
+    public function __construct(EntityManagerInterface $entityManager, ClubRepository $clubRepository, PlayerRepository $playerRepository)
     {
         $this->entityManager = $entityManager;
         $this->clubRepository = $clubRepository;
+        $this->playerRepository=$playerRepository;
 
     }
     #[Route('club', name: 'club_index', methods: "GET")]
     public function index():Response{
-        $club = $this->clubRepository->findAll();
+      $clubs = $this->clubRepository->findAll();
+      $data = [];
+      foreach ($clubs as $club){
+          $id= $club->getId();
+          $name = $club->getName();
+          $budget = $club->getBudget();
+          $email = $club->getEmail();
+          $phone = $club->getPhone();
 
-        return $this->json($club, 200, [], ['groups'=>'clubs']);
+          $data[]= [
+              'id'=>$id,
+              'name'=>$name,
+              'budget'=>$budget,
+              'email'=>$email,
+              'phone'=>$phone,
+          ];
+      }
+      return $this->json(["Clubs"=>$data]);
     }
 
 
@@ -173,4 +196,29 @@ class ClubController extends AbstractController
 
         }
     }
+
+    #[Route('club/{id}/delete_player/{player_id}', name: 'club_delete_player', methods: "DELETE")]
+    #[ParamConverter("player", options:[ 'mapping' =>["player_id"=> "id"], 'exclude'=>["id"]])]
+    #[ParamConverter("club", options: ['mapping'=>["id"=>"id"], 'exclude'=>["player_id"]])]
+    public function deletePlayer(Club $club, Player $player): Response{
+
+
+        $this->entityManager->remove($player);
+        $this->entityManager->flush();
+
+        return $this->json(null, 204);
+    }
+
+
+
+    #[Route('club/{id}/delete_coach/{coach_id}', name: 'club_delete_coach', methods: "DELETE")]
+    #[ParamConverter("coach", options:[ 'mapping'=>["coach_id"=>"id"], 'exclude'=>["id"]])]
+    #[ParamConverter("club",options: ['mapping'=>["id"=>"id"], 'exclude'=>["coach_id"]])]
+    public function deleteCoach(Club $club, Coach $coach):Response{
+        $this->entityManager->remove($coach);
+        $this->entityManager->flush();
+
+        return $this->json(null, 204);
+    }
+
 }

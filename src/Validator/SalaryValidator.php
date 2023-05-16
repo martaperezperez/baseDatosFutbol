@@ -5,6 +5,8 @@ namespace App\Validator;
 use App\Entity\Club;
 
 use App\Entity\Player;
+use http\Exception;
+use http\Message;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraint;
@@ -32,7 +34,7 @@ class SalaryValidator extends ConstraintValidator
            // return new JsonResponse(['message'=>'Player salary exceeds club budget'], Response::HTTP_CREATED);
         }
 
-        return true;
+
     }
 
 
@@ -43,10 +45,16 @@ class SalaryValidator extends ConstraintValidator
 
         $player=$this->context->getRoot()->getData();
         $this->validatePlayerSalary($player);
+
+        $this->context->buildViolation($constraint->message)
+            ->setParameter('{{ salary }}', $value)
+            ->addViolation();
+
         // TODO: Implement validate() method.
 
 
     }
+
 
 
 }

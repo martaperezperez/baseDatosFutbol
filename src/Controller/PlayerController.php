@@ -49,9 +49,40 @@ class PlayerController extends AbstractController
 
       #[Route('player', name:'player_index', methods:"GET")]
           public function index():Response{
-          $player = $this->playerRepository->findALL();
 
-             return $this->json($player, 200,[], ['groups'=>'player'] );
+          $players = $this-> playerRepository->findAll();
+          $data = [];
+          foreach ($players as $player){
+              $id= $player->getId();
+              $dni = $player->getDni();
+              $name = $player->getName();
+              $lastname = $player->getLastName();
+              $team = $player->getTeam();
+              $salary = $player->getSalary();
+              $position = $player->getPosition();
+              $dorsal = $player->getDorsal();
+              $email = $player->getEmail();
+              $phone = $player->getPhone();
+
+              $data[]= [
+                  'id' => $id,
+                  'dni'=> $dni,
+                  'name'=> $name,
+                  'last_name'=> $lastname,
+                  'team'=> $team,
+                  'salary'=>$salary,
+                  'position'=>$position,
+                  'dorsal'=>$dorsal,
+                  'email'=> $email,
+                  'phone'=> $phone,
+              ];
+
+          }
+
+          return $this ->json(["Players:" => $data]);
+          //$player = $this->playerRepository->findALL();
+
+          //   return $this->json($player, 200,[], ['groups'=>'player'] );
 
             }
 

@@ -33,9 +33,33 @@ class coachController extends AbstractController
     #[Route('coach', name:'coach_index', methods:"GET")]
     public function index():Response{
 
-        $coach = $this->coachRepository->findAll();
+      $coachs = $this->coachRepository->findAll();
+      $data= [];
 
-        return $this->json($coach, 200, [], ['groups'=>'coach'] );
+       foreach ($coachs as $coach){
+           $id= $coach->getId();
+           $dni= $coach->getDni();
+           $name= $coach->getName();
+           $lastname = $coach->getLastname();
+           $team = $coach->getTeam();
+           $salary = $coach->getSalary();
+           $email = $coach->getEmail();
+           $phone = $coach->getPhone();
+
+           $data[]=[
+             'id'=>$id,
+             'dni'=>$dni,
+             'name'=>$name,
+             'last_name'=>$lastname,
+             'team'=>$team,
+             'salary'=>$salary,
+             'email'=>$email,
+             'phone'=>$phone,
+
+           ];
+
+       }
+       return $this ->json(["Coachs"=>$data]);
 
     }
 
