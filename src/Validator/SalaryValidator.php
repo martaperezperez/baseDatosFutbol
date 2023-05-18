@@ -11,50 +11,36 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use function PHPUnit\Framework\isNull;
 
 class SalaryValidator extends ConstraintValidator
 {
     /**
      * @throws \Exception
      */
-    public function validatePlayerSalary(Player $player)
+    public function  validatePlayerSalary(Player $player):bool
     {
-
         $club=$player->getClub();
-        /* @var App\Validator\Salary $constraint */
+        if($club!==null) {
+            /* @var App\Validator\Salary $constraint */
 
-        $salary = $player->getSalary();
-         $clubBudget = $club->getBudget();
-
-
-        if (($clubBudget - $salary) < 0 ) {
-
-           throw new \Exception('Player salary exceeds club budget or gives zero or less');
-
-           // return new JsonResponse(['message'=>'Player salary exceeds club budget'], Response::HTTP_CREATED);
+            $salary = $player->getSalary();
+            $clubBudget = $club->getBudget();
+            return !(($clubBudget - $salary) <= 0);
         }
-
-
+            return true;
     }
-
-
 
     public function validate(mixed $value, Constraint $constraint)
     {
         /* @var App\Validator\Salary $constraint */
 
         $player=$this->context->getRoot()->getData();
-        $this->validatePlayerSalary($player);
+            if(!$this->validatePlayerSalary($player)){
+                $this->context->buildViolation($constraint->message)
+                    ->setParameter('{{ salary }}', $value)
+                    ->addViolation();
 
-        $this->context->buildViolation($constraint->message)
-            ->setParameter('{{ salary }}', $value)
-            ->addViolation();
-
-        // TODO: Implement validate() method.
-
-
+            }
     }
-
-
-
 }

@@ -141,22 +141,13 @@ class ClubController extends AbstractController
         $player = new Player();
         $player->setClub($club);
         $form = $this->createForm(PlayerType::class, $player, ["method"=> "POST"]);
-
         $form->handleRequest($request);
-
-        $playerRepository->save($player,true);
         try {
-            (new \App\Validator\SalaryValidator)->validatePlayerSalary($player) ;
-
-
              if($form->isSubmitted() && $form->isValid()){
                  $playerRepository->save($player, true);
                  return new JsonResponse(['message'=>'Player Create successfully'], Response::HTTP_CREATED);
-
-
              }
               return new JsonResponse(['errors'=>FormErrorsToArray::staticParseErrorsToArray($form)],Response::HTTP_BAD_REQUEST);
-
         }catch(\Exception $e){
             return new Response('Error '.$e->getMessage());
         }
@@ -174,8 +165,6 @@ class ClubController extends AbstractController
         $form = $this->createForm(CoachType::class, $coach, ["method" => "POST"]);
         $form->handleRequest($request);
 
-
-        $coachRepository->save($coach, true);
         try {
             (new \App\Validator\CoachSalaryValidator)->validateCoachSalary($coach);
 

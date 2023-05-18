@@ -162,30 +162,38 @@ class Player
     }
 
 
-    public static function loadValidatorMetadata(ClassMetadata $metadata){
-        $metadata->addConstraint(new UniqueEntity([
-            'fields'=>'dni',
-            'message'=>'The dni is already exists'
-        ]))
-            ->addConstraint(new UniqueEntity([
-                'fields'=>'email',
-                'message'=>'The email is already exists'
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+
+            $metadata->addConstraint(new UniqueEntity([
+                'fields' => 'dni',
+                'message' => 'The dni is already exists'
             ]))
-            ->addConstraint(new UniqueEntity([
-                'fields'=>'phone',
-                'message'=>'The phone is already exists'
-            ]));
+                ->addConstraint(new UniqueEntity([
+                    'fields' => 'email',
+                    'message' => 'The email is already exists'
+                ]))
+                ->addConstraint(new UniqueEntity([
+                    'fields' => 'phone',
+                    'message' => 'The phone is already exists'
+
+                ]));
+
     }
 
     public function getClub(): ?Club
     {
-        return $this->club;
+
+            return $this->club;
+
     }
 
     public function setClub(?Club $club): self
     {
-        $this->club = $club;
+            $this->club = $club;
 
-        return $this;
+            return $this;
+
     }
+
 }

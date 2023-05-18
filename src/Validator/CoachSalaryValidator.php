@@ -12,16 +12,18 @@ class CoachSalaryValidator extends ConstraintValidator
     /**
      * @throws \Exception
      */
-    public function validateCoachSalary(Coach $coach){
+    public function validateCoachSalary(Coach $coach): bool{
 
         $club=$coach->getClub();
+if($club !== null) {
+    $salary = $coach->getSalary();
+    $clubBudget = $club->getBudget();
 
-        $salary = $coach->getSalary();
-        $clubBudget = $club->getBudget();
+     return !(($clubBudget - $salary) < 0);
 
-        if(($clubBudget - $salary)<0){
-         throw new \Exception('Coach salary exceeds club budget or gives zero or less');
-        }
+
+
+}
         return true;
 }
 
@@ -35,11 +37,14 @@ class CoachSalaryValidator extends ConstraintValidator
 
 
         $coach= $this->context->getRoot()->getData();
-        $this->validateCoachSalary($coach);
+
+       if( !$this->validateCoachSalary($coach)){
+           $this->context->buildViolation($constraint->message)
+               ->setParameter('{{ salary }}', $value)
+               ->addViolation();
+       }
 
 
-        $this->context->buildViolation($constraint->message)
-            ->setParameter('{{ salary }}', $value)
-            ->addViolation();
+
     }
 }

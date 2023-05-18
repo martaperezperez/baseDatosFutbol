@@ -16,7 +16,7 @@ class Salary extends Constraint
      * Any public properties become valid options for the annotation.
      * Then, use these in your validator class.
      */
-    public string $message = 'The salary "{{ value }}" is not valid.';
+    public string $message = 'The salary {{ salary }} is not  valid.';
 
 
 }
