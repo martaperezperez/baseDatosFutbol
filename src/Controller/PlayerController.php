@@ -95,7 +95,6 @@ class PlayerController extends AbstractController
        $player = new Player();
        $form = $this->createForm(PlayerType::class, $player);
 
-
        $form->handleRequest($request);
 
        if($form->isSubmitted() && $form->isValid()){
@@ -149,6 +148,30 @@ class PlayerController extends AbstractController
                    $player->getPhone()
             ));
        }
+
+    #[Route('club/{id}/index_player', name: 'club_index_player', methods: "GET")]
+    public function list(Request $request, $id): Response
+    {
+        $property = $request->query->get('property'); // Obtener el valor del parámetro "property"
+        $page = $request->query->getInt('page', 1); // Obtener el número de página actual
+
+        $playerPerPage = 10; // Cantidad de jugadores por página
+
+        $player = $this->playerRepository->findByClubAndProperty($id, $property);
+
+        $totalplayer = count($player);
+        $totalPages = ceil($totalplayer / $playerPerPage);
+
+        $player = array_slice($player, ($page - 1) * $playerPerPage, $playerPerPage);
+
+        $response = [
+            'player' => $player,
+            'totalPages' => $totalPages,
+            'currentPage' => $page,
+        ];
+
+        return new JsonResponse($response);
+    }
 
 
 

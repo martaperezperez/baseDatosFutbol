@@ -68,4 +68,25 @@ class PlayerRepository extends ServiceEntityRepository
 //    }
 
 
+    public function findByClubAndProperty($id, $property)
+    {
+
+
+        $qb = $this->createQueryBuilder('j');
+        $qb->select('j.name')
+        ->andWhere('j.club = :clubId')
+            ->setParameter('clubId', $id);
+
+        if (!empty($property)) {
+            $qb->andWhere('j.property = :property')
+                ->setParameter('property', $property);
+        }
+
+        $query = $qb->getQuery();
+
+        return $query->getResult();
+    }
+
+
+
 }

@@ -1,7 +1,7 @@
 # Mini Aplicación Symfony API Rest 
 ## Mini Aplicación con base de datos que gestiones clubes, jugadores y entrenadores
 
-## _Proyecto en Symfoni creación_
+## _Creacion Proyecto en Symfoni_
 #### En la terminal ponemos el proximo comando,para entrar en el directorio que queremos crear el proyecto:
 - ```cd/var/www```
 #### Con el siguiente comando creamos el proyecto en symfony que se va a llamar baseDatosFutbol:
@@ -134,43 +134,62 @@
 
 #### En las clases Controllers vamos a meter los metodos create, update,delete, show, index. vamos a ver estos metodos como ejemplo en la clase club
 #### El constructor, en el que fuera del constructor ponemos en privado a las entidades , ```$entityManager```, ```$clubRepository``` de la clase ClubRepository y ```$validator```, y dentro del constructor los llamamos :
+### Constructor 
 
 ![constructorClaseClub.png](src%2Fimagenes%2FconstructorClaseClub.png)
 
 ####  Arriba antes de entrar al metodo ponemos la ruta por la que queremos llamar a este metodo.
-#### Metodo Create:
+### Metodo Create:
 ![MetodoCreateClub.png](src%2Fimagenes%2FMetodoCreateClub.png)
 
-#### Metodo Index:
+### Metodo Index:
 
 ![MetodoIndexClub.png](src%2Fimagenes%2FMetodoIndexClub.png)
 
-#### Metodo Update:
+### Metodo Update:
 
 ![MetodoUpdateClub.png](src%2Fimagenes%2FMetodoUpdateClub.png)
 
-#### Metodo Delete:
+### Metodo Delete:
 
 ![MetodoDeleteClub.png](src%2Fimagenes%2FMetodoDeleteClub.png)
 
-#### Metodo Show:
+### Metodo Show:
 
 ![MetodoShowClub.png](src%2Fimagenes%2FMetodoShowClub.png)
 
 #### En la clase Club tambien vamos a meter el metodo de sar de alta un player en el club, dar de alta un coach en el club, dar de baja un player del club y dar de baja un coach del club
 
-#### Metodo dar de alta un player en el club
+### Metodo dar de alta un player en el club
+
+![MetodoClubCreatePlayer.png](src%2Fimagenes%2FMetodoClubCreatePlayer.png)
+
+### Metodo dar de alta un coach en el club
+
+![MetodoClubCreateCoach.png](src%2Fimagenes%2FMetodoClubCreateCoach.png)
+
+### Metodo dar de baja un player de un club
+
+![metodoClubDeletePlayer.png](src%2Fimagenes%2FmetodoClubDeletePlayer.png)
+
+### Metodo dar de baja un coach de un club
+
+![metodoClubDeleteCoach.png](src%2Fimagenes%2FmetodoClubDeleteCoach.png)
 
 
-#### Metodo dar de alta un coach en el club
+#### En la clase Player aparte de los metodos index, create,  delete, show y update vamos a meter un metodo para listar los nombres de  los players que tengan un club con paginacion.
 
+### Metodo listar los players que tengan un club
 
-#### Metodo dar de baja un player de un club
+![MetodoListarPlayerconunClub.png](src%2Fimagenes%2FMetodoListarPlayerconunClub.png)
 
+#### Este metodo esta conectado con la clase PlayerController en la que tiene el metodo findByClubAndProperty
 
-#### Metodo dar de baja un coach de un club
+### Metodo findByClubAndProperty de la clase PlayerController
 
-### Ahora vamos a crear las clases From que nos servira para recoger los datos y crear formularios
+![MetodoFinfByClubAndProperty.png](src%2Fimagenes%2FMetodoFinfByClubAndProperty.png)
+
+### Ahora vamos a crear las clases From que nos servira para recoger los datos y crear formularios en los que cada atributo de cada clase tendra sus constraints especificos dependiendo del atributo
 - ```hp bin/console make:form PlayerType```
 
 ![crearPlayerType.png](src%2Fimagenes%2FcrearPlayerType.png)
@@ -200,6 +219,12 @@
 
 ([Player.php](src%2FEntity%2FPlayer.php))
 
+#### Las clases Entity tambien les metimos un codigo para que los atributos que queramos no se repitan
+
+### Clase para que no se repitan los atributos
+
+![MetodoNoRepetir.png](src%2Fimagenes%2FMetodoNoRepetir.png)
+
 ### La clase de errores para que te especifica que error da cuando envias el metodo create o update.
 
 ![ClaseErrores.png](src%2Fimagenes%2FClaseErrores.png)
@@ -217,10 +242,14 @@
 
 ### Directorio Validator que dentro tiene una clase SalaryValidator
 
-#### La clase SalaryValidator sirve para que cuando el Salaryo del player o Coach sea mayor que el budget de el Club de error y no deje crear el player o el coach
+#### La clase SalaryValidator y CoachSalaryValidator sirve para que cuando el Salary del player o Coach sea mayor que el budget de el Club de error y no deje crear el player o el coach
 ![ClaseValidator.png](src%2Fimagenes%2FClaseValidator.png)
 
-[SalaryValidator.php](src%2FValidator%2FSalaryValidator.php)
+![ClaseSalaryValidator.png](src%2Fimagenes%2FClaseSalaryValidator.png)
+
+([SalaryValidator.php](src%2FValidator%2FSalaryValidator.php))
+
+([CoachSalaryValidator.php](src%2FValidator%2FCoachSalaryValidator.php))
 
 
 ## _POSTMAN_ 
@@ -230,7 +259,7 @@
 #### En postman vamos a crear una nueva coleccion llamada baseDatosFutbol y dentro de ella vamos a crear 3 carpetas que se van a llamar PLayer,Entrenador y Club como nuestras clases entity y un request que se va a llamar pagina inicia que nos va a llevar a la pagina inicial.
 #### Dentro de cada carpeta vamos a crear 5 request cada uno por un metodo(create, delete, update, show, index) que va tener cada carpeta referente a cada clase.
 
-![postmanOrganizacion.png](src%2Fimagenes%2FpostmanOrganizacion.png)
+![PostmanOrganizacion.png](src%2Fimagenes%2FPostmanOrganizacion.png)
 
 #### Para que nos lleve a la pagina inicial ponemos la url, en el campo de la URL, que pusimos en el codigo de arriba en nginx en este caso futbol.localhost y al lado de la url ponemos POTs y le damos a send para enviar y abajo en Preview vemos la pagina inicial.
 
@@ -241,4 +270,8 @@
 
 #### Despues de esto le damos a enviar y nos tiene que llegar un mensaje en la parte de abajo de que el club a sido creado correctamente
 ![ClubCreadoCorrectamente.png](src%2Fimagenes%2FClubCreadoCorrectamente.png)
+
+#### Hacemos lo mismo con los demas metodos, delete, update,index, show, club_create_player, club_create_coach, club_delete_player, club_delete_coachy listar Players con un club poniendole la URL que le hayas puesto tu en el codigo
+#### en los metodos index, delete, y show no hace faltas meter codigo en JSON debido a que no vamos a crear ni cambiar ningun dato solo nos tiene que devolver por pantalla que el metodo se ejecuto correctamente.
+
 
