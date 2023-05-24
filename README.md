@@ -130,7 +130,11 @@
 
 ([coachController.php](src%2FController%2FcoachController.php))
 
+#### En el metodo Create y Delete tiene una opcion para que al dar de alta o de baja un Coach te envie un email avisandote
+
 ([PlayerController.php](src%2FController%2FPlayerController.php))
+
+#### En el metodo Create y Delete tiene una opcion para que al dar de alta o de baja a un Player te envie un email avisandote
 
 #### En las clases Controllers vamos a meter los metodos create, update,delete, show, index. vamos a ver estos metodos como ejemplo en la clase club
 #### El constructor, en el que fuera del constructor ponemos en privado a las entidades , ```$entityManager```, ```$clubRepository``` de la clase ClubRepository y ```$validator```, y dentro del constructor los llamamos :
@@ -160,22 +164,21 @@
 
 #### En la clase Club tambien vamos a meter el metodo de sar de alta un player en el club, dar de alta un coach en el club, dar de baja un player del club y dar de baja un coach del club
 
-### Metodo dar de alta un player en el club
+### Metodo dar de alta un player en el club que te envie un email cuando te das de alta
 
 ![MetodoClubCreatePlayer.png](src%2Fimagenes%2FMetodoClubCreatePlayer.png)
 
-### Metodo dar de alta un coach en el club
+### Metodo dar de alta un coach en el club que te envie un email cuando te das de alta
 
 ![MetodoClubCreateCoach.png](src%2Fimagenes%2FMetodoClubCreateCoach.png)
 
-### Metodo dar de baja un player de un club
+### Metodo dar de baja un player de un club que te envie un email cuando te das de baja
 
-![metodoClubDeletePlayer.png](src%2Fimagenes%2FmetodoClubDeletePlayer.png)
+![MetodoClubDeletePlayer.png](src%2Fimagenes%2FMetodoClubDeletePlayer.png)
 
-### Metodo dar de baja un coach de un club
+### Metodo dar de baja un coach de un club que te envie un email cuando te das de baja
 
-![metodoClubDeleteCoach.png](src%2Fimagenes%2FmetodoClubDeleteCoach.png)
-
+![MetodoClubDeleteCoach.png](src%2Fimagenes%2FMetodoClubDeleteCoach.png)
 
 #### En la clase Player aparte de los metodos index, create,  delete, show y update vamos a meter un metodo para listar los nombres de  los players que tengan un club con paginacion.
 
