@@ -25,6 +25,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -47,14 +49,15 @@ class ClubController extends AbstractController
 
     private $playerRepository;
 
+    private $mailer;
 
 
-
-    public function __construct(EntityManagerInterface $entityManager, ClubRepository $clubRepository, PlayerRepository $playerRepository)
+    public function __construct(EntityManagerInterface $entityManager, ClubRepository $clubRepository, PlayerRepository $playerRepository,  MailerInterface $mailer)
     {
         $this->entityManager = $entityManager;
         $this->clubRepository = $clubRepository;
         $this->playerRepository=$playerRepository;
+        $this->mailer=$mailer;
 
     }
     #[Route('club', name: 'club_index', methods: "GET")]
@@ -90,8 +93,13 @@ class ClubController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $clubRepository->save($club, true);
-
-            return new JsonResponse(['message'=>'Club reate successfully'], Response::HTTP_CREATED);
+        //    $email = (new Email())
+        //        ->from('marta.perez@xilon.es')
+        //        ->to($club->getEmail())
+        //        ->subject('Dar de Alta Club')
+        //        ->text('Has sido dado de alta como un Club ');
+        //    $this->mailer->send($email);
+            return new JsonResponse(['message'=>'Club create successfully'], Response::HTTP_CREATED);
         }
 
         return new JsonResponse(['errors'=>FormErrorsToArray::staticParseErrorsToArray($form)], Response::HTTP_BAD_REQUEST);
@@ -103,8 +111,15 @@ class ClubController extends AbstractController
     public function delete(Club $club):Response{
         $this->entityManager->remove($club);
         $this->entityManager->flush();
+      //  $email = (new Email())
+      //      ->from('marta.perez@xilon.es')
+      //      ->to($club->getEmail())
+      //      ->subject('Dar de Baja Club')
+      //      ->text('Has sido dado de baja como Club ');
+      //  $this->mailer->send($email);
+        return new JsonResponse(['message' => 'Club successfully removed'], Response::HTTP_CREATED);
 
-        return $this->json(null, 204);
+       // return $this->json(null, 204);
     }
 
 
@@ -145,7 +160,13 @@ class ClubController extends AbstractController
         try {
              if($form->isSubmitted() && $form->isValid()){
                  $playerRepository->save($player, true);
-                 return new JsonResponse(['message'=>'Player Create successfully'], Response::HTTP_CREATED);
+                 $email = (new Email())
+                     ->from('marta.perez@xilon.es')
+                     ->to($player->getEmail())
+                     ->subject('Dar de Alta Player')
+                     ->text('Has sido dado de alta como  Player');
+                 $this->mailer->send($email);
+                 return new JsonResponse(['message'=>'Player in Club Create successfully'], Response::HTTP_CREATED);
              }
               return new JsonResponse(['errors'=>FormErrorsToArray::staticParseErrorsToArray($form)],Response::HTTP_BAD_REQUEST);
         }catch(\Exception $e){
@@ -170,9 +191,16 @@ class ClubController extends AbstractController
 
             if ($form->isSubmitted() && $form->isValid()) {
 
-                $coachRepository->save($coach, true);
 
-                return new JsonResponse(['message' => 'Club Create successfully'], Response::HTTP_CREATED);
+                $coachRepository->save($coach, true);
+                $email = (new Email())
+                    ->from('marta.perez@xilon.es')
+                    ->to($coach->getEmail())
+                    ->subject('Dar de Alta Coach')
+                    ->text('Has sido dado de alta como Coach ');
+                $this->mailer->send($email);
+
+                return new JsonResponse(['message' => 'Coach i Club Create successfully'], Response::HTTP_CREATED);
 
             }
 
@@ -194,6 +222,12 @@ class ClubController extends AbstractController
 
         $this->entityManager->remove($player);
         $this->entityManager->flush();
+        $email = (new Email())
+            ->from('marta.perez@xilon.es')
+            ->to($player->getEmail())
+            ->subject('Dar de Baja Player')
+            ->text('Has sido dado de baja como Player ');
+        $this->mailer->send($email);
 
         return $this->json(null, 204);
     }
@@ -206,6 +240,12 @@ class ClubController extends AbstractController
     public function deleteCoach(Club $club, Coach $coach):Response{
         $this->entityManager->remove($coach);
         $this->entityManager->flush();
+        $email = (new Email())
+            ->from('marta.perez@xilon.es')
+            ->to($coach->getEmail())
+            ->subject('Dar de Baja Coach')
+            ->text('Has sido dado de baja como Coach ');
+        $this->mailer->send($email);
 
         return $this->json(null, 204);
     }

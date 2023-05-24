@@ -12,6 +12,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -34,13 +36,16 @@ class PlayerController extends AbstractController
             private $entityManager;
             private $playerRepository;
 
+            private $mailer;
+
            // private $validator;
 
 
-      public function __construct(EntityManagerInterface $entityManager, PlayerRepository $playerRepository, ValidatorInterface $validator)
+      public function __construct(EntityManagerInterface $entityManager, PlayerRepository $playerRepository, ValidatorInterface $validator, MailerInterface $mailer)
           {
                       $this->entityManager= $entityManager;
                       $this->playerRepository= $playerRepository;
+                      $this->mailer=$mailer;
                      // $this->validator= $validator;
           }
 
@@ -99,8 +104,16 @@ class PlayerController extends AbstractController
 
        if($form->isSubmitted() && $form->isValid()){
            $playerRepository->save($player, true);
+           $email = (new Email())
+               ->from('marta.perez@xilon.es')
+               ->to($player->getEmail())
+               ->subject('Dar de Alta Player')
+               ->text('Has sido dado de alta como  Player');
+           $this->mailer->send($email);
            return new JsonResponse(['message'=> 'Player create successfully'], Response::HTTP_CREATED);
        }
+
+
 
        return new JsonResponse(['errors'=>FormErrorsToArray::staticParseErrorsToArray($form)],Response::HTTP_BAD_REQUEST);
 
@@ -113,7 +126,15 @@ class PlayerController extends AbstractController
            $this->entityManager->remove($player);
            $this->entityManager->flush();
 
-           return $this->json(null,204);
+           $email = (new Email())
+               ->from('marta.perez@xilon.es')
+               ->to($player->getEmail())
+               ->subject('Dar de Baja Player')
+               ->text('Has sido dado de baja como Player ');
+           $this->mailer->send($email);
+
+           return new JsonResponse(['message' => 'Player successfully removed'], Response::HTTP_CREATED);
+          // return $this->json(null,204);
        }
 
 

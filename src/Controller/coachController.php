@@ -11,6 +11,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -21,9 +23,10 @@ class coachController extends AbstractController
     private $entityManager;
 
     private $coachRepository;
+    private $mailer;
 
-    public function __construct(EntityManagerInterface $entityManager, CoachRepository $coachRepository){
-
+    public function __construct(EntityManagerInterface $entityManager, CoachRepository $coachRepository, MailerInterface $mailer){
+        $this->mailer=$mailer;
         $this->entityManager=$entityManager;
         $this->coachRepository=$coachRepository;
 
@@ -73,10 +76,17 @@ class coachController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
             $coachRepository->save($coach, true);
+            $email = (new Email())
+                ->from('marta.perez@xilon.es')
+                ->to($coach->getEmail())
+                ->subject('Dar de Alta Coach')
+                ->text('Has sido dado de alta como Coach ');
+            $this->mailer->send($email);
 
             return new JsonResponse(['message' => 'Coach create successfully'], Response::HTTP_CREATED);
 
         }
+
 
         return new JsonResponse(['errors'=>FormErrorsToArray::staticParseErrorsToArray($form)], Response::HTTP_BAD_REQUEST);
 
@@ -87,7 +97,16 @@ class coachController extends AbstractController
         $this->entityManager->remove($coach);
         $this->entityManager->flush();
 
-        return $this->json(null, 204);
+        $email = (new Email())
+            ->from('marta.perez@xilon.es')
+            ->to($coach->getEmail())
+            ->subject('Dar de Baja Coach')
+            ->text('Has sido dado de baja como Coach ');
+        $this->mailer->send($email);
+
+
+        return new JsonResponse(['message' => 'Coach successfully removed'], Response::HTTP_CREATED);
+        //return $this->json(null, 204);
 
 
     }
