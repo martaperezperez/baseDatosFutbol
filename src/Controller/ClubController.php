@@ -163,8 +163,8 @@ class ClubController extends AbstractController
                  $email = (new Email())
                      ->from('marta.perez@xilon.es')
                      ->to($player->getEmail())
-                     ->subject('Dar de Alta Player')
-                     ->text('Has sido dado de alta como  Player');
+                     ->subject('Dar de Alta Player en un Club')
+                     ->text('Has sido dado de alta como  Player en un Club');
                  $this->mailer->send($email);
                  return new JsonResponse(['message'=>'Player in Club Create successfully'], Response::HTTP_CREATED);
              }
@@ -196,8 +196,8 @@ class ClubController extends AbstractController
                 $email = (new Email())
                     ->from('marta.perez@xilon.es')
                     ->to($coach->getEmail())
-                    ->subject('Dar de Alta Coach')
-                    ->text('Has sido dado de alta como Coach ');
+                    ->subject('Dar de Alta Coach en un Club')
+                    ->text('Has sido dado de alta como Coach en un Club ');
                 $this->mailer->send($email);
 
                 return new JsonResponse(['message' => 'Coach i Club Create successfully'], Response::HTTP_CREATED);
@@ -225,8 +225,8 @@ class ClubController extends AbstractController
         $email = (new Email())
             ->from('marta.perez@xilon.es')
             ->to($player->getEmail())
-            ->subject('Dar de Baja Player')
-            ->text('Has sido dado de baja como Player ');
+            ->subject('Dar de Baja Player en un Club')
+            ->text('Has sido dado de baja como Player en un Club');
         $this->mailer->send($email);
 
         return $this->json(null, 204);
@@ -243,8 +243,8 @@ class ClubController extends AbstractController
         $email = (new Email())
             ->from('marta.perez@xilon.es')
             ->to($coach->getEmail())
-            ->subject('Dar de Baja Coach')
-            ->text('Has sido dado de baja como Coach ');
+            ->subject('Dar de Baja Coach en un Club')
+            ->text('Has sido dado de baja como Coach en un Club');
         $this->mailer->send($email);
 
         return $this->json(null, 204);
