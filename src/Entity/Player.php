@@ -18,6 +18,10 @@ class Player
     #[ORM\Column]
     private ?int $id = null;
 
+    /**
+     * @param int|null $id
+     */
+
     #[ORM\Column(length: 11)]
     private ?string $dni = null;
 
@@ -51,6 +55,10 @@ class Player
     public function getId(): ?int
     {
         return $this->id;
+    }
+    public function setId(?int $id): void
+    {
+        $this->id = $id;
     }
 
     public function getDni(): ?string

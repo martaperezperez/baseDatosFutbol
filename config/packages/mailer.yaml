@@ -6,3 +6,8 @@ when@dev:
         mailer:
             envelope:
                 recipients: [ 'marta.perez@xilon.es' ]
+when@test:
+    framework:
+        mailer:
+            envelope:
+                recipients: [ 'marta.perez@xilon.es' ]

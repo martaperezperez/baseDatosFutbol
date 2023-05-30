@@ -2,8 +2,7 @@
 
 namespace App\Controller;
 
-use App\Validator\CoachSalaryValidator;
-use App\Validator\SalaryValidator;
+
 use App\Entity\Club;
 use App\Repository\ClubRepository;
 use App\Entity\Coach;
@@ -12,14 +11,9 @@ use App\Form\ClubType;
 use App\Form\CoachType;
 use App\Form\PlayerType;
 use App\Helper\FormErrorsToArray;
-
 use App\Repository\CoachRepository;
 use App\Repository\PlayerRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use http\Exception;
-use PhpParser\Comment;
-use PHPUnit\Util\Xml\Validator;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -28,7 +22,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ClubController extends AbstractController
 {
@@ -163,8 +156,8 @@ class ClubController extends AbstractController
                  $email = (new Email())
                      ->from('marta.perez@xilon.es')
                      ->to($player->getEmail())
-                     ->subject('Dar de Alta Player en un Club')
-                     ->text('Has sido dado de alta como  Player en un Club');
+                     ->subject('Dar de Alta Player en un club')
+                     ->text('Has sido dado de alta como  Player');
                  $this->mailer->send($email);
                  return new JsonResponse(['message'=>'Player in Club Create successfully'], Response::HTTP_CREATED);
              }

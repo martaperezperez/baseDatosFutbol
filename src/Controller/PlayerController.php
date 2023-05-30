@@ -8,6 +8,7 @@ use App\Form\PlayerType;
 use App\Helper\FormErrorsToArray;
 use App\Repository\PlayerRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\Id;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -84,7 +85,7 @@ class PlayerController extends AbstractController
 
           }
 
-          return $this ->json(["Players:" => $data]);
+          return $this ->json(["players" => $data]);
           //$player = $this->playerRepository->findALL();
 
           //   return $this->json($player, 200,[], ['groups'=>'player'] );
@@ -102,21 +103,29 @@ class PlayerController extends AbstractController
 
        $form->handleRequest($request);
 
+
+
        if($form->isSubmitted() && $form->isValid()){
+
            $playerRepository->save($player, true);
+
            $email = (new Email())
                ->from('marta.perez@xilon.es')
                ->to($player->getEmail())
                ->subject('Dar de Alta Player')
                ->text('Has sido dado de alta como  Player');
            $this->mailer->send($email);
-           return new JsonResponse(['message'=> 'Player create successfully'], Response::HTTP_CREATED);
+
+
+
+
+           return new JsonResponse(['message'=> 'Player create successfully',['id:'=>$player->getId()]], Response::HTTP_CREATED);
+
        }
 
 
-
+       
        return new JsonResponse(['errors'=>FormErrorsToArray::staticParseErrorsToArray($form)],Response::HTTP_BAD_REQUEST);
-
 
     }
 
