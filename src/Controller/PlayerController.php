@@ -70,6 +70,7 @@ class PlayerController extends AbstractController
               $email = $player->getEmail();
               $phone = $player->getPhone();
 
+
               $data[]= [
                   'id' => $id,
                   'dni'=> $dni,
