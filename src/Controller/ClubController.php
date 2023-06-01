@@ -201,7 +201,7 @@ class ClubController extends AbstractController
 
 
         } catch (\Exception $e) {
-            return new Response('Error ' . $e->getMessage());
+            return new JsonResponse('Error ' . $e->getMessage());
 
 
         }
