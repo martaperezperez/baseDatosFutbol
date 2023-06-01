@@ -133,7 +133,7 @@ class ClubController extends AbstractController
 
     #[Route('club/show/{id}', name: 'club_show', methods: "GET")]
     public function show(Club $club):Response{
-        return new Response(sprintf(
+        return $this->json(sprintf(
             'name: %s budget: %d email: %s phone: %s',
             $club->getName(),
             $club->getBudget(),
@@ -163,7 +163,7 @@ class ClubController extends AbstractController
              }
               return new JsonResponse(['errors'=>FormErrorsToArray::staticParseErrorsToArray($form)],Response::HTTP_BAD_REQUEST);
         }catch(\Exception $e){
-            return new Response('Error '.$e->getMessage());
+            return new JsonResponse('Error '.$e->getMessage());
         }
         //return  $this->redirectToRoute('club_show',['clubId'=> $club->getId()]);
 

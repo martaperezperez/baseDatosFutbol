@@ -128,7 +128,7 @@ class coachController extends AbstractController
 
     #[Route('coach/show/{id}', name: 'coach_show', methods: "GET")]
     public function show(Coach $coach):Response{
-        return new Response(sprintf(
+        return $this->json(sprintf(
             'dni. %s name: %s last_name: %s team: %s salary: %d email: %s phone: %d',
             $coach->getDni(),
             $coach->getName(),

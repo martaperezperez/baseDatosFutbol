@@ -166,7 +166,7 @@ class PlayerController extends AbstractController
 
        #[Route('player/show/{id}', name:'player_show',methods: "GET")]
         public function show(Player $player):Response{
-                     return new Response(sprintf(
+                     return $this->json(sprintf(
                'dni: %s name: %s last_name: %s team: %s salary: %d position: %s dorsal: %d email: %s phone: %s',
                    $player->getDni(),
                    $player->getName(),
