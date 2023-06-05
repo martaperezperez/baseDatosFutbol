@@ -21,41 +21,41 @@ class PostControllerTest extends WebTestCase
         }
     }
 //-------------------------------------------------------------------INDEX PLAYER----------------------------------------------------------------------//
-//     public function testResponseSuccesfulIndexPlayer(): void {
-//        $client = self::$client;
-//         $crawler = $client->request('GET', '//futbol.localhost/player');
-//         $this->assertResponseIsSuccessful();
-//         $responseContent = $client->getResponse()->getContent();
-//         echo $responseContent . PHP_EOL;
-//
-//     }
-//     public function testResponseIsJsonPlayer(): void{
-//         $client = static::createClient();
-//         $crawler = $client->request('GET', '//futbol.localhost/player');
-//         $this->assertResponseFormatSame("json");
-//         $responseContent = $client->getResponse()->getContent();
-//         echo $responseContent . PHP_EOL;
-//     }
-//     public function testResponseHasPlayer(): void {
-//         $client = static::createClient();
-//         $crawler = $client->request('GET', '//futbol.localhost/player');
-//         $response=$client->getResponse();
-//         $this->assertTrue($response->headers->contains('Content-Type', 'application/json'));
-//         $this->assertJson($response->getContent());
-//         $responseData = json_decode($response->getContent(), true);
-//         $responseContent = $client->getResponse()->getContent();
-//         echo $responseContent . PHP_EOL;
-//     }
-//     public function testResponseExceptionPlayer(): void{
-//         $client = static::createClient();
-//         $crawler = $client->request('GET', '//futbol.localhost/player');
-//         $response=$client->getResponse();
-//         $this->assertTrue($response->headers->contains('Content-Type', 'application/json'));
-//         $this->assertJson($response->getContent());
-//         $client->catchExceptions(false);
-//         $responseContent = $client->getResponse()->getContent();
-//         echo $responseContent . PHP_EOL;
-//     }
+     public function testResponseSuccesfulIndexPlayer(): void {
+        $client = self::$client;
+         $crawler = $client->request('GET', '//futbol.localhost/player');
+         $this->assertResponseIsSuccessful();
+         $responseContent = $client->getResponse()->getContent();
+         echo $responseContent . PHP_EOL;
+
+     }
+     public function testResponseIsJsonPlayer(): void{
+         $client = static::createClient();
+         $crawler = $client->request('GET', '//futbol.localhost/player');
+         $this->assertResponseFormatSame("json");
+         $responseContent = $client->getResponse()->getContent();
+         echo $responseContent . PHP_EOL;
+     }
+     public function testResponseHasPlayer(): void {
+         $client = static::createClient();
+         $crawler = $client->request('GET', '//futbol.localhost/player');
+         $response=$client->getResponse();
+         $this->assertTrue($response->headers->contains('Content-Type', 'application/json'));
+         $this->assertJson($response->getContent());
+         $responseData = json_decode($response->getContent(), true);
+         $responseContent = $client->getResponse()->getContent();
+         echo $responseContent . PHP_EOL;
+     }
+     public function testResponseExceptionPlayer(): void{
+         $client = static::createClient();
+         $crawler = $client->request('GET', '//futbol.localhost/player');
+         $response=$client->getResponse();
+         $this->assertTrue($response->headers->contains('Content-Type', 'application/json'));
+         $this->assertJson($response->getContent());
+         $client->catchExceptions(false);
+         $responseContent = $client->getResponse()->getContent();
+         echo $responseContent . PHP_EOL;
+     }
 //------------------------------------------------------------------------ METODO createPlayerData ----------------------------------------------------------------------------//
     private function createPlayerData(): array
     {
@@ -71,44 +71,36 @@ class PostControllerTest extends WebTestCase
             "phone" => "125656" . rand(100, 999)];
     }
 //---------------------------------------------------------------- CREATE PLAYER ----------------------------------------------------------------------------------------//
-//    public function testResponseSuccessfulCreatePlayer(): void
-//    {
-//        $client = static::createClient();
-//        $crawler = $client->request('POST', '//futbol.localhost/player/create',$this->createPlayerData());
-//        $this->assertResponseIsSuccessful();
-//        $responseContent = $client->getResponse()->getContent();
-//        echo $responseContent . PHP_EOL;
-//    }
-//
-//    public function  testResponseIsJsonCreatePlayer():void
-//    {
-//        $client = static::createClient();
-//        $crawler = $client->request('POST', '//futbol.localhost/player/create', $this->createPlayerData());
-//        $this->assertResponseFormatSame("json");
-//        $responseContent = $client->getResponse()->getContent();
-//        echo $responseContent . PHP_EOL;
-//    }
-//    public function testResponseHasCreatePlayer (): void {
-//           $client = static ::createClient();
-//           $crawler = $client->request('POST', '//futbol.localhost/player/create', $this->createPlayerData());
-//           $response = $client->getResponse();
-//           $this->assertTrue($response->headers->contains('Content-Type','application/json'));
-//           $this->assertJson($response->getContent());
-//           $responseData= json_decode($response->getContent(), true);
-//           $responseContent = $client->getResponse()->getContent();
-//           echo $responseContent . PHP_EOL;
-//       }
-//
-//       public function testResponseExceptionCreatePlayer(): void {
-//           $client= static ::createClient();
-//           $crawler = $client->request('POST','//futbol.localhost/player/create', $this->createPlayerData());
-//           $response = $client->getResponse();
-//           $this->assertTrue($response->headers->contains('Content-Type','application/json'));
-//           $this->assertJson($response->getContent());
-//           $client->catchExceptions(false);
-//           $responseContent = $client->getResponse()->getContent();
-//           echo $responseContent . PHP_EOL;
-//       }
+    public function testResponseSuccessfulCreatePlayer(): void
+    {
+        $client = static::createClient();
+        $crawler = $client->request('POST', '//futbol.localhost/player/create',$this->createPlayerData());
+        $this->assertResponseIsSuccessful();
+    }
+
+    public function  testResponseIsJsonCreatePlayer():void
+    {
+        $client = static::createClient();
+        $crawler = $client->request('POST', '//futbol.localhost/player/create', $this->createPlayerData());
+        $this->assertResponseFormatSame("json");
+    }
+    public function testResponseHasCreatePlayer (): void {
+           $client = static ::createClient();
+           $crawler = $client->request('POST', '//futbol.localhost/player/create', $this->createPlayerData());
+           $response = $client->getResponse();
+           $this->assertTrue($response->headers->contains('Content-Type','application/json'));
+           $this->assertJson($response->getContent());
+           $responseData= json_decode($response->getContent(), true);
+       }
+
+       public function testResponseExceptionCreatePlayer(): void {
+           $client= static ::createClient();
+           $crawler = $client->request('POST','//futbol.localhost/player/create', $this->createPlayerData());
+           $response = $client->getResponse();
+           $this->assertTrue($response->headers->contains('Content-Type','application/json'));
+           $this->assertJson($response->getContent());
+           $client->catchExceptions(false);
+       }
 //------------------------------------------------------------------------ METODO createRandPlayer -----------------------------------------------------------------//
     private function createRandPlayer(): int
     {
@@ -190,16 +182,12 @@ class PostControllerTest extends WebTestCase
          $client= static ::createClient();
         $crawler = $client->request('PUT', '//futbol.localhost/player/update/'.$this->createRandPlayer(), $this->createPlayerData());
         $this->assertResponseIsSuccessful();
-        $responseContent = $client->getResponse()->getContent();
-        echo $responseContent . PHP_EOL;
 
     }
     public function testResponseIsJsonUpdatePlayer(): void{
         $client= static ::createClient();
         $crawler = $client->request('PUT', '//futbol.localhost/player/update/'.$this->createRandPlayer(), $this->createPlayerData());
         $this->assertResponseFormatSame("json");
-        $responseContent = $client->getResponse()->getContent();
-        echo $responseContent . PHP_EOL;
     }
     public function testResponseHasUpdatePlayer():void{
         $client= static ::createClient();
@@ -208,8 +196,6 @@ class PostControllerTest extends WebTestCase
         $this->assertTrue($response->headers->contains('Content-Type','application/json'));
         $this->assertJson($response->getContent());
         $responseData = json_decode($response->getContent(),true);
-        $responseContent = $client->getResponse()->getContent();
-        echo $responseContent . PHP_EOL;
     }
     public function testResponseExceptionUpdatePlayer(): void{
         $client= static ::createClient();
@@ -218,8 +204,6 @@ class PostControllerTest extends WebTestCase
         $this->assertTrue($response->headers->contains('Content-Type','application/json'));
         $this->assertJson($response->getContent());
         $client->catchExceptions(false);
-        $responseContent = $client->getResponse()->getContent();
-        echo $responseContent . PHP_EOL;
     }
 //----------------------------------------------------------- CLUB INDEX PLAYER ------------------------------------------------------------------------------------//
     public function testResponseSuccessfulClubIndexPlayer():void{
@@ -308,15 +292,11 @@ class PostControllerTest extends WebTestCase
             $client = static::createClient();
             $crawler = $client->request('POST', '//futbol.localhost/coach/create', $this->createCoachData());
             $this->assertResponseIsSuccessful();
-           $responseContent = $client->getResponse()->getContent();
-           echo $responseContent . PHP_EOL;
         }
         public function testResponseIsJsonCreateCoach():void {
             $client = static::createClient();
             $crawler = $client->request('POST', '//futbol.localhost/coach/create', $this->createCoachData());
             $this->assertResponseFormatSame("json");
-           $responseContent = $client->getResponse()->getContent();
-           echo $responseContent . PHP_EOL;
         }
         public function testResponseHasCreateCoach():void{
             $client = static ::createClient();
@@ -325,8 +305,6 @@ class PostControllerTest extends WebTestCase
             $this->assertTrue($response->headers->contains('Content-Type', 'application/json'));
             $this->assertJson($response->getContent());
             $responseData = json_decode($response->getContent(), true );
-           $responseContent = $client->getResponse()->getContent();
-           echo $responseContent . PHP_EOL;
         }
         public function testResponseExceptionCreateCoach(): void{
             $client= static::createClient();
@@ -335,8 +313,6 @@ class PostControllerTest extends WebTestCase
             $this->assertTrue($response->headers->contains('Content-Type', 'application/json'));
             $this->assertJson($response->getContent());
             $client->catchExceptions(false);
-           $responseContent = $client->getResponse()->getContent();
-           echo $responseContent . PHP_EOL;
         }
 //------------------------------------------------------ METODO CreateRandCoach --------------------------------------------------------------------------------------//
     private function CreateRandCoach(): int
@@ -424,8 +400,6 @@ class PostControllerTest extends WebTestCase
         $client= static::createClient();
         $crawler = $client->request('PUT', '//futbol.localhost/coach/update/'.$this->CreateRandCoach(),$this->createCoachData());
         $this->assertResponseFormatSame("json");
-        $responseContent = $client->getResponse()->getContent();
-        echo $responseContent . PHP_EOL;
     }
     public function testResponseHasUpdateCoach():void{
        $client= static::createClient();
@@ -434,8 +408,6 @@ class PostControllerTest extends WebTestCase
         $this->assertTrue($response->headers->contains('Content-Type','application/json'));
         $this->assertJson($response->getContent());
         $responseData = json_decode($response->getContent(), true);
-        $responseContent = $client->getResponse()->getContent();
-        echo $responseContent . PHP_EOL;
     }
     public function testResponseExceptionUpdateCoach(): void {
         $client= static::createClient();
@@ -444,23 +416,17 @@ class PostControllerTest extends WebTestCase
         $this->assertTrue($response->headers->contains('Content-Type','application/json'));
         $this->assertJson($response->getContent());
         $client->catchExceptions(false);
-        $responseContent = $client->getResponse()->getContent();
-        echo $responseContent . PHP_EOL;
     }
 //-------------------------------------------------------- INDEX CLUB ----------------------------------------------------------------------------------------------//
      public function testResponseSuccessfulIndexClub(): void {
          $client= static ::createClient();
          $crawler = $client->request('GET','//futbol.localhost/club');
          $this->assertResponseIsSuccessful();
-         $responseContent = $client->getResponse()->getContent();
-         echo $responseContent . PHP_EOL;
      }
      public function testResponseIsJsonClub(): void {
          $client = static::createClient();
          $crawler = $client->request('GET', '//futbol.localhost/club');
          $this->assertResponseFormatSame("json");
-           $responseContent = $client->getResponse()->getContent();
-           echo $responseContent . PHP_EOL;
      }
      public function testResponseHasClub(): void{
          $client = static::createClient();
@@ -469,8 +435,6 @@ class PostControllerTest extends WebTestCase
          $this->assertTrue($response->headers->contains('Content-Type', 'application/json'));
          $this->assertJson($response->getContent());
          $responseData= json_decode($response->getContent(), true);
-           $responseContent = $client->getResponse()->getContent();
-           echo $responseContent . PHP_EOL;
      }
      public function testResponseExceptionClub(): void{
          $client= static::createClient();
@@ -479,8 +443,6 @@ class PostControllerTest extends WebTestCase
          $this->assertTrue($response->headers->contains('Content-Type', 'application/json'));
          $this->assertJson($response->getContent());
          $client->catchExceptions(false);
-           $responseContent = $client->getResponse()->getContent();
-           echo $responseContent . PHP_EOL;
      }
 //------------------------------------------------------ METODO createClubData --------------------------------------------------------------------------------//
     private function createClubData(): array
@@ -496,15 +458,11 @@ class PostControllerTest extends WebTestCase
         $client = static ::createClient();
         $crawler = $client->request('POST', '//futbol.localhost/club/create', $this->createClubData());
         $this->assertResponseIsSuccessful();
-           $responseContent = $client->getResponse()->getContent();
-           echo $responseContent . PHP_EOL;
     }
     public function testResponseIsJsonCreateClub(): void{
         $client = static ::createClient();
         $crawler= $client->request('POST', '//futbol.localhost/club/create', $this->createClubData());
         $this->assertResponseFormatSame("json");
-           $responseContent = $client->getResponse()->getContent();
-           echo $responseContent . PHP_EOL;
     }
     public function testResponseHasCreateClub():void {
         $client = static::createClient();
@@ -513,8 +471,6 @@ class PostControllerTest extends WebTestCase
         $this->assertTrue($response->headers->contains('Content-Type', 'application/json'));
         $this->assertJson($response->getContent());
         $responseData = json_decode($response->getContent(), true);
-           $responseContent = $client->getResponse()->getContent();
-           echo $responseContent . PHP_EOL;
     }
     public function testResponseExceptionCreateClub(): void {
         $client = static::createClient();
@@ -523,8 +479,6 @@ class PostControllerTest extends WebTestCase
         $this->assertTrue($response->headers->contains('Content-Type', 'application/json'));
         $this->assertJson($response->getContent());
         $client->catchExceptions(false);
-           $responseContent = $client->getResponse()->getContent();
-           echo $responseContent . PHP_EOL;
     }
 //----------------------------------------------------------- METODO CreateRandClub --------------------------------------------------------------------------//
     private function CreateRandClub(): int
@@ -605,15 +559,11 @@ class PostControllerTest extends WebTestCase
         $client = static::createClient();
         $crawler = $client->request('PUT', '//futbol.localhost/club/update/'.$this->CreateRandClub(), $this->createClubData());
         $this->assertResponseIsSuccessful();
-           $responseContent = $client->getResponse()->getContent();
-           echo $responseContent . PHP_EOL;
     }
     public function testResponsIsJsonUpdateClub():void{
        $client = static::createClient();
         $crawler = $client->request('PUT', '//futbol.localhost/club/update/'.$this->CreateRandClub(), $this->createClubData());
         $this->assertResponseFormatSame("json");
-           $responseContent = $client->getResponse()->getContent();
-           echo $responseContent . PHP_EOL;
     }
     public function testResponseHasUpdateClub(): void {
           $client = static::createClient();
@@ -622,8 +572,6 @@ class PostControllerTest extends WebTestCase
         $this->assertTrue($response->headers->contains('Content-Type','application/json'));
         $this->assertJson($response->getContent());
         $responseData = json_decode($response->getContent(), true);
-           $responseContent = $client->getResponse()->getContent();
-           echo $responseContent . PHP_EOL;
     }
     public function testResponseExceptionUpdateClub():void{
         $client = static::createClient();
@@ -632,23 +580,17 @@ class PostControllerTest extends WebTestCase
         $this->assertTrue($response->headers->contains('Content-Type','application/json'));
         $this->assertJson($response->getContent());
         $client->catchExceptions(false);
-           $responseContent = $client->getResponse()->getContent();
-           echo $responseContent . PHP_EOL;
 }
 //----------------------------------------------------- CLUB CREATE PLAYER -----------------------------------------------------------------------------//
     public function testResponseSuccessfulClubCreatePlayer(): void {
         $client = static::createClient();
         $crawler = $client->request('POST', '//futbol.localhost/club/'.$this->CreateRandClub().'/create_player/', $this->createPlayerData());
         $this->assertResponseIsSuccessful();
-           $responseContent = $client->getResponse()->getContent();
-           echo $responseContent . PHP_EOL;
     }
     public function testResponseIsJsonClubCreatePlayer(): void{
         $client = static::createClient();
         $crawler = $client->request('POST', '//futbol.localhost/club/'.$this->CreateRandClub().'/create_player/',$this->createPlayerData());
         $this->assertResponseFormatSame("json");
-           $responseContent = $client->getResponse()->getContent();
-           echo $responseContent . PHP_EOL;
     }
     public function testResponseHasClubCreatePlayer (): void{
        $client = static::createClient();
@@ -657,8 +599,6 @@ class PostControllerTest extends WebTestCase
         $this->assertTrue($response->headers->contains('Content-Type', 'application/json'));
         $this->assertJson($response->getContent());
         $responseData = json_decode($response->getContent(), true);
-           $responseContent = $client->getResponse()->getContent();
-           echo $responseContent . PHP_EOL;
     }
     public function testResponseExceptionClubCreatePlayer():void{
          $client = static::createClient();
@@ -667,8 +607,6 @@ class PostControllerTest extends WebTestCase
         $this->assertTrue($response->headers->contains('Content-Type','application/json'));
         $this->assertJson($response->getContent());
         $client->catchExceptions(false);
-           $responseContent = $client->getResponse()->getContent();
-           echo $responseContent . PHP_EOL;
     }
 //----------------------------------------------------- CLUB DELETE PLAYER ------------------------------------------------------------------------------//
     public function testResponseSuccessfulClubDeletePlayer(): void {
@@ -708,8 +646,6 @@ class PostControllerTest extends WebTestCase
         $client = static::createClient();
         $crawler = $client->request('POST', '//futbol.localhost/club/' . $this->CreateRandClub() . '/create_coach', $this->createCoachData());
         $this->assertResponseIsSuccessful();
-        $responseContent = $client->getResponse()->getContent();
-        echo $responseContent . PHP_EOL;
     }
 
     public function testResponseIsJsonClubCreateCoach(): void
@@ -717,8 +653,6 @@ class PostControllerTest extends WebTestCase
         $client = static::createClient();
         $crawler = $client->request('POST', '//futbol.localhost/club/' . $this->CreateRandClub() . '/create_coach', $this->createCoachData());
         $this->assertResponseFormatSame("json");
-        $responseContent = $client->getResponse()->getContent();
-        echo $responseContent . PHP_EOL;
     }
 
     public function testResponseHasClubCreateCoach(): void
@@ -729,8 +663,6 @@ class PostControllerTest extends WebTestCase
         $this->assertTrue($response->headers->contains('Content-Type', 'application/json'));
         $this->assertJson($response->getContent());
         $responseData = json_decode($response->getContent(), true);
-        $responseContent = $client->getResponse()->getContent();
-        echo $responseContent . PHP_EOL;
     }
 
     public function testResponseExceptionClubCreateCoach(): void
@@ -741,8 +673,6 @@ class PostControllerTest extends WebTestCase
         $this->assertTrue($response->headers->contains('Content-Type', 'application/json'));
         $this->assertJson($response->getContent());
         $client->catchExceptions(false);
-        $responseContent = $client->getResponse()->getContent();
-        echo $responseContent . PHP_EOL;
     }
 
 //----------------------------------------------------- CLUB DELETE COACH -------------------------------------------------------------------------------//
