@@ -9,6 +9,9 @@ use App\Helper\FormErrorsToArray;
 use App\Repository\PlayerRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Id;
+use Nelmio\ApiDocBundle\Model\Model;
+use OpenApi\Attributes\Items;
+use OpenApi\Attributes\JsonContent;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +20,8 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Nelmio\ApiDocBundle\Annotation\Security;
+use OpenApi\Attributes as OA;
 
 
 
@@ -54,6 +59,7 @@ class PlayerController extends AbstractController
 
 
       #[Route('player', name:'player_index', methods:"GET")]
+      #[OA\Get(path: '/player', tags: ['Player'])]
           public function index():Response{
 
           $players = $this-> playerRepository->findAll();
@@ -95,6 +101,7 @@ class PlayerController extends AbstractController
 
 
     #[Route('player/create',name: 'player_create', methods:"POST")]
+    #[OA\Post(path: '/player/create', tags: ['Player'])]
 
     public function create(Request $request, PlayerRepository $playerRepository): Response
     {
@@ -132,6 +139,7 @@ class PlayerController extends AbstractController
 
 
        #[Route('player/delete/{id}', name:'player_delete', methods:"DELETE")]
+       #[OA\Delete(path: '/player/delete/{id}', tags: ['Player'])]
        public function delete(Player $player):Response{
            $this->entityManager->remove($player);
            $this->entityManager->flush();
@@ -149,6 +157,7 @@ class PlayerController extends AbstractController
 
 
        #[Route('player/update/{id}', name:'player_update', methods: "PUT")]
+       #[OA\Put(path: '/player/update/{id}', tags: ['Player'])]
         public function update(Request $request, Player $player,PlayerRepository $playerRepository):Response{
 
           $form = $this->createForm(PlayerType::class, $player ,["method"=> "PUT"]);
@@ -165,6 +174,7 @@ class PlayerController extends AbstractController
 
 
        #[Route('player/show/{id}', name:'player_show',methods: "GET")]
+       #[OA\Get(path: '/player/show/{id}', tags: ['Player'])]
         public function show(Player $player):Response{
                      return $this->json(sprintf(
                'dni: %s name: %s last_name: %s team: %s salary: %d position: %s dorsal: %d email: %s phone: %s',
@@ -181,6 +191,7 @@ class PlayerController extends AbstractController
        }
 
     #[Route('club/{id}/index_player', name: 'club_index_player', methods: "GET")]
+    #[OA\Get(path: '/club/{id}/index_player', tags: ['Player Club Index'])]
     public function list(Request $request, $id): Response
     {
         $property = $request->query->get('property'); // Obtener el valor del parámetro "property"

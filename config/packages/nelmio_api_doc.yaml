@@ -1,0 +1,17 @@
+nelmio_api_doc:
+  documentation:
+    info:
+      title: Teams Futbol
+      description: This is an app that manages a league with its clubs, players and trainers!
+      version: 1.0.0
+    paths:
+      /club:
+        get:
+          summary: Return a list of all clubs with each players and trainers.
+          responses:
+            '200': #status code
+              description: OK
+
+#  areas: # to filter documented areas
+#    path_patterns:
+#      - ^/api(?!/doc$) # Accepts routes under /api except /api/doc

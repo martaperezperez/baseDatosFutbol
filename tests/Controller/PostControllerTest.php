@@ -20,42 +20,50 @@ class PostControllerTest extends WebTestCase
             self::$client = static::createClient();
         }
     }
-//-------------------------------------------------------------------INDEX PLAYER----------------------------------------------------------------------//
-     public function testResponseSuccesfulIndexPlayer(): void {
-        $client = self::$client;
-         $crawler = $client->request('GET', '//futbol.localhost/player');
-         $this->assertResponseIsSuccessful();
-         $responseContent = $client->getResponse()->getContent();
-         echo $responseContent . PHP_EOL;
 
-     }
-     public function testResponseIsJsonPlayer(): void{
-         $client = static::createClient();
-         $crawler = $client->request('GET', '//futbol.localhost/player');
-         $this->assertResponseFormatSame("json");
-         $responseContent = $client->getResponse()->getContent();
-         echo $responseContent . PHP_EOL;
-     }
-     public function testResponseHasPlayer(): void {
-         $client = static::createClient();
-         $crawler = $client->request('GET', '//futbol.localhost/player');
-         $response=$client->getResponse();
-         $this->assertTrue($response->headers->contains('Content-Type', 'application/json'));
-         $this->assertJson($response->getContent());
-         $responseData = json_decode($response->getContent(), true);
-         $responseContent = $client->getResponse()->getContent();
-         echo $responseContent . PHP_EOL;
-     }
-     public function testResponseExceptionPlayer(): void{
-         $client = static::createClient();
-         $crawler = $client->request('GET', '//futbol.localhost/player');
-         $response=$client->getResponse();
-         $this->assertTrue($response->headers->contains('Content-Type', 'application/json'));
-         $this->assertJson($response->getContent());
-         $client->catchExceptions(false);
-         $responseContent = $client->getResponse()->getContent();
-         echo $responseContent . PHP_EOL;
-     }
+//-------------------------------------------------------------------INDEX PLAYER----------------------------------------------------------------------//
+    public function testResponseSuccesfulIndexPlayer(): void
+    {
+        $client = self::$client;
+        $crawler = $client->request('GET', '//futbol.localhost/player');
+        $this->assertResponseIsSuccessful();
+        $responseContent = $client->getResponse()->getContent();
+        echo $responseContent . PHP_EOL;
+
+    }
+
+    public function testResponseIsJsonPlayer(): void
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '//futbol.localhost/player');
+        $this->assertResponseFormatSame("json");
+        $responseContent = $client->getResponse()->getContent();
+        echo $responseContent . PHP_EOL;
+    }
+
+    public function testResponseHasPlayer(): void
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '//futbol.localhost/player');
+        $response = $client->getResponse();
+        $this->assertTrue($response->headers->contains('Content-Type', 'application/json'));
+        $this->assertJson($response->getContent());
+        $responseData = json_decode($response->getContent(), true);
+        $responseContent = $client->getResponse()->getContent();
+        echo $responseContent . PHP_EOL;
+    }
+
+    public function testResponseExceptionPlayer(): void
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '//futbol.localhost/player');
+        $response = $client->getResponse();
+        $this->assertTrue($response->headers->contains('Content-Type', 'application/json'));
+        $this->assertJson($response->getContent());
+        $client->catchExceptions(false);
+        $responseContent = $client->getResponse()->getContent();
+        echo $responseContent . PHP_EOL;
+    }
 //------------------------------------------------------------------------ METODO createPlayerData ----------------------------------------------------------------------------//
     private function createPlayerData(): array
     {
@@ -389,7 +397,6 @@ class PostControllerTest extends WebTestCase
         $this->assertJson($response->getContent());
         $client->catchExceptions(false);
     }
-
 //---------------------------------------------------- UPDATE COACH -------------------------------------------------------------------------------------------------//
     public function testResponseSuccessfulUpdateCoach(): void {
         $client= static::createClient();
@@ -698,6 +705,7 @@ class PostControllerTest extends WebTestCase
         $responseData = json_decode($response->getContent(), true);
 
     }
+
 
     public function testResponseExceptionClubDeleteCoach(): void
     {

@@ -22,6 +22,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
+use OpenApi\Attributes as OA;
 
 class ClubController extends AbstractController
 {
@@ -54,6 +57,7 @@ class ClubController extends AbstractController
 
     }
     #[Route('club', name: 'club_index', methods: "GET")]
+    #[OA\Get(path: '/club', tags: ['Club'])]
     public function index():Response{
       $clubs = $this->clubRepository->findAll();
       $data = [];
@@ -78,6 +82,7 @@ class ClubController extends AbstractController
 
 
     #[Route('club/create','club_create',methods: "POST")]
+    #[OA\Post(path: '/club/create', tags: ['Club'])]
     public function create(Request $request, ClubRepository $clubRepository): Response{
 
         $club = new Club();
@@ -101,6 +106,7 @@ class ClubController extends AbstractController
 
 
     #[Route('club/delete/{id}', name:'club_delete', methods:"DELETE")]
+    #[OA\Delete(path: '/club/delete/{id}', tags: ['Club'])]
     public function delete(Club $club):Response{
         $this->entityManager->remove($club);
         $this->entityManager->flush();
@@ -117,6 +123,7 @@ class ClubController extends AbstractController
 
 
     #[Route('club/update/{id}', name:'club_update', methods:"PUT")]
+    #[OA\Put(path: '/club/update/{id}', tags: ['Club'])]
     public function update(Request $request, Club $club,ClubRepository $clubRepository): Response{
 
         $form = $this->createForm(ClubType::class, $club, ["method"=>"PUT"]);
@@ -132,6 +139,7 @@ class ClubController extends AbstractController
     }
 
     #[Route('club/show/{id}', name: 'club_show', methods: "GET")]
+    #[OA\Get(path: '/club/show/{id}', tags: ['Club'])]
     public function show(Club $club):Response{
         return $this->json(sprintf(
             'name: %s budget: %d email: %s phone: %s',
@@ -144,6 +152,7 @@ class ClubController extends AbstractController
 
 
     #[Route('club/{id}/create_player/', name: 'club_create_player', methods:"POST")]
+    #[OA\Post(path: '/club/{id}/create_player/', tags: ['Club Player'])]
     public function cratePlayer(Request $request, Club $club ,PlayerRepository $playerRepository): Response{
 
         $player = new Player();
@@ -172,6 +181,7 @@ class ClubController extends AbstractController
 
 
     #[Route('club/{id}/create_coach', name: 'club_create_coach', methods: "POST")]
+    #[OA\Post(path: '/club/{id}/create_coach', tags: ['Club Coach'])]
     public function createCoach(Request $request, Club $club, CoachRepository $coachRepository):Response
     {
         $coach = new Coach();
@@ -210,6 +220,7 @@ class ClubController extends AbstractController
     #[Route('club/{id}/delete_player/{player_id}', name: 'club_delete_player', methods: "DELETE")]
     #[ParamConverter("player", options:[ 'mapping' =>["player_id"=> "id"], 'exclude'=>["id"]])]
     #[ParamConverter("club", options: ['mapping'=>["id"=>"id"], 'exclude'=>["player_id"]])]
+    #[OA\Delete(path: '/club/{id}/delete_player/{player_id}', tags: ['Club Player'])]
     public function deletePlayer(Club $club, Player $player): Response{
 
 
@@ -230,6 +241,7 @@ class ClubController extends AbstractController
     #[Route('club/{id}/delete_coach/{coach_id}', name: 'club_delete_coach', methods: "DELETE")]
     #[ParamConverter("coach", options:[ 'mapping'=>["coach_id"=>"id"], 'exclude'=>["id"]])]
     #[ParamConverter("club",options: ['mapping'=>["id"=>"id"], 'exclude'=>["coach_id"]])]
+    #[OA\Delete(path: '/club/{id}/delete_coach/{coach_id}', tags: ['Club Coach'])]
     public function deleteCoach(Club $club, Coach $coach):Response{
         $this->entityManager->remove($coach);
         $this->entityManager->flush();

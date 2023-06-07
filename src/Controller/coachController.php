@@ -14,7 +14,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
+use OpenApi\Attributes as OA;
 
 class coachController extends AbstractController
 {
@@ -34,6 +36,7 @@ class coachController extends AbstractController
 
 
     #[Route('coach', name:'coach_index', methods:"GET")]
+    #[OA\Get(path: '/coach', tags: ['Coach'])]
     public function index():Response{
 
       $coachs = $this->coachRepository->findAll();
@@ -67,6 +70,7 @@ class coachController extends AbstractController
     }
 
     #[Route('coach/create', name: 'coach_create', methods:"POST")]
+    #[OA\Post(path: '/coach/create', tags: ['Coach'])]
     public function create(Request $request, CoachRepository $coachRepository): Response{
 
         $coach = new Coach();
@@ -93,6 +97,7 @@ class coachController extends AbstractController
     }
 
     #[Route('coach/delete/{id}', name: 'coach_delete', methods:"DELETE")]
+    #[OA\Delete(path: '/coach/delete/{id}', tags: ['Coach'])]
     public function delete(Coach $coach):Response{
         $this->entityManager->remove($coach);
         $this->entityManager->flush();
@@ -113,6 +118,7 @@ class coachController extends AbstractController
 
 
     #[Route('coach/update/{id}', name: 'coach_update', methods: "PUT")]
+    #[OA\Put(path: '/coach/update/{id}', tags: ['Coach'])]
     public function update(Request $request, Coach $coach, CoachRepository $coachRepository):Response{
 
         $form = $this->createForm(CoachType::class, $coach,["method"=>"PUT"]);
@@ -127,6 +133,7 @@ class coachController extends AbstractController
     }
 
     #[Route('coach/show/{id}', name: 'coach_show', methods: "GET")]
+    #[OA\Get(path: '/coach/show/{id}', tags: ['Coach'])]
     public function show(Coach $coach):Response{
         return $this->json(sprintf(
             'dni. %s name: %s last_name: %s team: %s salary: %d email: %s phone: %d',
