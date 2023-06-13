@@ -10,7 +10,7 @@ nelmio_api_doc:
           summary: Return a list of all clubs.
           responses:
             '200': #status code
-              description: Return a list of all Club
+              description: OK
               content:
                 application/json:
                   schema:
@@ -35,10 +35,10 @@ nelmio_api_doc:
               description: Unexpected error
       /club/create:
         post:
-          summary: Create a Club.
+          summary: Create a Club
           responses:
             '200': #status code
-              description: Create a Club
+              description: OK
               content:
                 application/json:
                   schema:
@@ -59,14 +59,26 @@ nelmio_api_doc:
                       phone:
                         type: integer
                         example: 684526495
+            '400':
+              description: Bad request
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      errors:
+                        type: array
+                        items:
+                          type: string
+                          example: Form not send
             default:
-              description: Unexpected error.
+              description: Unexpected error
       /club/delete/{id}:
         delete:
-          summary: Delete a Club.
+          summary: Delete a Club
           responses:
             '200': #status code
-              description: Delete a Club.
+              description: OK
               content:
                 application/json:
                   schema:
@@ -88,17 +100,27 @@ nelmio_api_doc:
                         type: integer
                         example: 6472849302
             '400':
-              description: The specified club id is invalid (not a number).
+              description: Bad request
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      errors:
+                        type: array
+                        items:
+                          type: string
+                          example: Form not send
             '404':
-              description: A Club with the specified id was not found.
+              description: Not found
             default:
-              description: Unexpected error.
+              description: Unexpected error
       /club/update/{id}:
         put:
-          summary: Update a Club.
+          summary: Update a Club
           responses:
             '200': #status code
-              description: Update a Club.
+              description: OK
               content:
                 application/json:
                   schema:
@@ -120,17 +142,27 @@ nelmio_api_doc:
                         type: integer
                         example: 647285329
             '400':
-              description: The specified club id is invalid (not a number).
+              description: Bad request
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      errors:
+                        type: array
+                        items:
+                          type: string
+                          example: Form not send
             '404':
-              description: A Club with the specified id was not found.
+              description: Not found
             default:
-              description: Unexpected error.
+              description: Unexpected error
       /club/show/{id}:
         get:
-          summary: Show a Club.
+          summary: Show a Club
           responses:
             '200': #status code
-              description: Show a Club.
+              description: OK
               content:
                 application/json:
                   schema:
@@ -152,17 +184,27 @@ nelmio_api_doc:
                         type: integer
                         example: 631953045
             '400':
-              description: The specified club id is invalid (not a number).
+              description: Bad request
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      errors:
+                        type: array
+                        items:
+                          type: string
+                          example: Form not send
             '404':
-              description: A Club with the specified id was not found.
+              description: Not found
             default:
-              description: Unexpected error.
+              description: Unexpected error
       /club/{id}/create_player/:
         post:
-          summary: Create a Player in a Club.
+          summary: Create a Player in a Club
           responses:
             '200': #status code
-              description: Create a Player in a Club.
+              description: OK
               content:
                 application/json:
                   schema:
@@ -202,17 +244,27 @@ nelmio_api_doc:
                         type: integer
                         example: 2
             '400':
-              description: The specified club id is invalid (not a number).
-            '404':
-              description: A Club with the specified id was not found.
+              description: Bad request
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      errors:
+                        type: array
+                        items:
+                          type: string
+                          example: Form not send
+            '401':
+              description: Not found
             default:
-              description: Unexpected error.
+              description: Unexpected error
       /club/{id}/delete_player/{player_id}:
         delete:
           summary: Delete PLayer in a Club.
           responses:
             '200': #status code
-              description: Delete a Player in a Club
+              description: OK
               content:
                 application/json:
                   schema:
@@ -252,17 +304,27 @@ nelmio_api_doc:
                         type: integer
                         example: 2
             '400':
-              description: The specified Club or Player id or player_id is invalid (not a number).
+              description: Bad request
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      errors:
+                        type: array
+                        items:
+                          type: string
+                          example: Form not send
             '404':
-              description: A Club or Player with the specified id or player_id was not found.
+              description: Not found
             default:
-              description: Unexpected error.
+              description: Unexpected error
       /club/{id}/create_coach:
         post:
-          summary: Create a Coach in a Club.
+          summary: Create a Coach in a Club
           responses:
             '200': #status code
-              description: Create a Coach in a Club.
+              description: OK
               content:
                 application/json:
                   schema:
@@ -296,17 +358,27 @@ nelmio_api_doc:
                         type: int
                         example: 2
             '400':
-              description: The specified Club id is invalid (not a number).
+              description: Bad request
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      errors:
+                        type: array
+                        items:
+                          type: string
+                          example: Form not send
             '404':
-              description: A Club with the specified id was not found.
+              description: Not found
             default:
-              description: Unexpected error.
+              description: Unexpected error
       /club/{id}/delete_coach/{coach_id}:
         delete:
-          summary: Delete a Coach in a Club.
+          summary: Delete a Coach in a Club
           responses:
             '200': #status code
-              description: Delete a Coach in a Club.
+              description: OK
               content:
                 application/json:
                   schema:
@@ -337,17 +409,27 @@ nelmio_api_doc:
                         type: integer
                         example: 2
             '400':
-              description: The specified Club or Coach id or coach_id is invalid (not a number).
+              description: Bad request
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      errors:
+                        type: array
+                        items:
+                          type: string
+                          example: Form not send
             '404':
-              description: A Club or Coach with the specified id or coach_id was not found.
+              description: Not found
             default:
-              description: Unexpected error.
+              description: Unexpected error
       /player:
         get:
-          summary: Return a list of all Players.
+          summary: Return a list of all Players
           responses:
             '200': #status code
-              description: Return a list of all Players.
+              description: OK
               content:
                 application/json:
                   schema:
@@ -381,13 +463,13 @@ nelmio_api_doc:
                         type: integer
                         example: 674839245
             default:
-              description: Unexpected error.
+              description: Unexpected error
       /player/create:
         post:
-          summary: Create a Player.
+          summary: Create a Player
           responses:
             '200': #status code
-              description:  Create a Player.
+              description: OK
               content:
                 application/json:
                   schema:
@@ -420,14 +502,26 @@ nelmio_api_doc:
                       phone:
                         type: integer
                         example: 674839245
+            '400':
+              description: Bad request
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      errors:
+                        type: array
+                        items:
+                          type: string
+                          example: Form not send
             default:
-              description: Unexpected error.
+              description: Unexpected error
       /player/delete/{id}:
         delete:
           summary: Delete a Player
           responses:
             '200': #status code
-              description: Delete a Player.
+              description: OK
               content:
                 application/json:
                   schema:
@@ -461,17 +555,27 @@ nelmio_api_doc:
                         type: integer
                         example: 674839245
             '400':
-              description: The specified Player id is invalid (not a number).
+              description: Bad request
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      errors:
+                        type: array
+                        items:
+                          type: string
+                          example: Form not send
             '404':
-              description: A Player with the specified id was not found
+              description: Not found
             default:
-              description: Unexpected error.
+              description: Unexpected error
       /player/update/{id}:
         put:
-          summary: Update a Player.
+          summary: Update a Player
           responses:
             '200': #status code
-              description: Update a Player.
+              description: OK
               content:
                 application/json:
                   schema:
@@ -505,17 +609,27 @@ nelmio_api_doc:
                         type: integer
                         example: 674839245
             '400':
-              description: The specified Player id is invalid (not a number).
+              description: Bad request
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      errors:
+                        type: array
+                        items:
+                          type: string
+                          example: Form not send
             '404':
-              description: A Player with the specified id was not found.
+              description: Not found
             default:
-              description: Unexpected error.
+              description: Unexpected error
       /player/show/{id}:
         get:
-          summary: Show a Player.
+          summary: Show a Player
           responses:
             '200': #status code
-              description: Show a Player.
+              description: OK
               content:
                 application/json:
                   schema:
@@ -549,17 +663,27 @@ nelmio_api_doc:
                         type: integer
                         example: 674839245
             '400':
-              description: The specified Player id is invalid (not a number).
+              description: Bad request
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      errors:
+                        type: array
+                        items:
+                          type: string
+                          example: For not send
             '404':
-              description: A Player with the specified id was not found.
+              description: Not found
             default:
-              description: Unexpected error.
+              description: Unexpected error
       /club/{id}/index_player:
         get:
-          summary: Return a list of all Players in a Club.
+          summary: Return a list of all Players in a Club
           responses:
             '200': #status code
-              description: Return a list of all Players in a Club.
+              description: OK
               content:
                 application/json:
                   schema:
@@ -596,17 +720,27 @@ nelmio_api_doc:
                         type: integer
                         example: 2
             '400':
-              description: The specified Club id is invalid (not a number).
+              description: Bad request
+              content:
+                application/jsom:
+                  schema:
+                    type: object
+                    properties:
+                      errors:
+                        type: array
+                        items:
+                          type: string
+                          example: Form not send
             '404':
-              description: A Club with the specified id was not found.
+              description: Not found
             default:
-              description: Unexpected error.
+              description: Unexpected error
       /coach:
         get:
-          summary: Return a list of all Coach.
+          summary: Return a list of all Coach
           responses:
             '200': #status code
-              description: Return a list of all Coach.
+              description: OK
               content:
                 application/json:
                   schema:
@@ -634,13 +768,13 @@ nelmio_api_doc:
                         type: integer
                         example: 6348492738
             default:
-              description: Unexpected error.
+              description: Unexpected error
       /coach/create:
         post:
-          summary: Create a Coach.
+          summary: Create a Coach
           responses:
             '200': #status code
-              description: Create a Coach.
+              description: OK
               content:
                 application/json:
                   schema:
@@ -667,14 +801,26 @@ nelmio_api_doc:
                       phone:
                         type: integer
                         example: 6348492738
+            '400':
+              description: Bad request
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      errors:
+                        type: array
+                        items:
+                          type: string
+                          example: Form not send
             default:
-              description: Unexpected error.
+              description: Unexpected error
       /coach/delete/{id}:
         delete:
-          summary: Delete a Coach.
+          summary: Delete a Coach
           responses:
             '200': #status code
-              description : Delete a Coach.
+              description : OK
               content:
                 application/json:
                   schema:
@@ -702,17 +848,27 @@ nelmio_api_doc:
                         type: integer
                         example: 6348492738
             '400':
-              description: The specified Coach id is invalid (not a number).
+              description: Bad request
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      errors:
+                        type: array
+                        items:
+                          type: string
+                          example: Form not send
             '404':
-              description: A Coach with the specified id was not found.
+              description: Not found
             default:
-              description: Unexpected error.
+              description: Unexpected error
       /coach/update/{id}:
         put:
-          summary: Update a Coach.
+          summary: Update a Coach
           responses:
             '200': #status code
-              description: Update a Coach.
+              description: OK
               content:
                 application/json:
                   schema:
@@ -740,17 +896,27 @@ nelmio_api_doc:
                         type: integer
                         example: 6348492738
             '400':
-              description: The specified Coach id is invalid (not a number).
+              description: Bad request
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      errors:
+                        type: array
+                        items:
+                          type: string
+                          example: Form not send
             '404':
-              description: A Coach with the specified id was not found
+              description: Not found
             default:
-              description: Unexpected error.
+              description: Unexpected error
       /coach/show/{id}:
         get:
-          summary: Show a Coach.
+          summary: Show a Coach
           responses:
             '200': #status code
-              description: Show a Club.
+              description: OK
               content:
                 application/json:
                   schema:
@@ -778,11 +944,21 @@ nelmio_api_doc:
                         type: integer
                         example: 6348492738
             '400':
-              description: The specified Coach id is invalid (not a number).
+              description: Bad Request
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      errors:
+                        type: array
+                        items:
+                          type: string
+                          example: Form not send
             '404':
-              description: A Coach with the specified id was not found.
+              description: Not found
             default:
-              description: Unexpected error.
+              description: Unexpected error
 
 #  areas: # to filter documented areas
 #    path_patterns:
